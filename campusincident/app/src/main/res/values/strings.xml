@@ -8,4 +8,9 @@
     <string name="password">Mot de passe</string>
     <string name="sign_up">S\'inscrire</string>
     <string name="forget_password">Mot de passe oublié ?</string>
+    <string name="photo_description">Une photo de l\'incident</string>
+    <string name="nombre_evaluation_text">Nombre de personnes souhaitant la résolution :</string>
+    <string name="incident_category_text">Categories :</string>
+    <string name="incident_date_text">Date du signalement :</string>
+    <string name="incident_description_text">Description :</string>
 </resources>

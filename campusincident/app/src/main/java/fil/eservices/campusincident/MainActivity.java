@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 loadingProgressBar.setVisibility(GONE);
-                startAnimation();
+                setContentView(R.layout.activity_detail_incident);
+                //startAnimation();
             }
         }.start();
     }
