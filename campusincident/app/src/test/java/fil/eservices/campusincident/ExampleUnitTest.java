@@ -1,4 +1,4 @@
-package com.eservices.campusincident;
+package fil.eservices.campusincident;
 
 import org.junit.Test;
 

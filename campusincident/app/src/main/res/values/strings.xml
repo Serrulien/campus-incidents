@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">CampusIncident</string>
+    <string name="app_name">Campus Incident</string>
+    <string name="welcome_back">Bienvenue</string>
+    <string name="signal_it_together">Signalons ensemble</string>
+    <string name="skip">Passer</string>
+    <string name="login">Se connecter</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="forget_password">Mot de passe oublié ?</string>
 </resources>
