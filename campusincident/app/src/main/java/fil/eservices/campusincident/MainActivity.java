@@ -1,17 +1,27 @@
 package fil.eservices.campusincident;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
+
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.mapbox.mapboxsdk.maps.Style;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -21,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView campusIconImageView;
     private ProgressBar loadingProgressBar;
     private RelativeLayout rootView, afterAnimationView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,5 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void onButtonClick(View view) {
+        Intent myIntent = new Intent(getBaseContext(),   MapActivity.class);
+        startActivity(myIntent);
     }
 }
