@@ -122,4 +122,9 @@ public class MapActivity extends AppCompatActivity {
         Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
         startActivity(myIntent);
     }
+
+    public void onButtonClickNotifications(View view) {
+        Intent myIntent = new Intent(getBaseContext(),   NotificationActivity.class);
+        startActivity(myIntent);
+    }
 }

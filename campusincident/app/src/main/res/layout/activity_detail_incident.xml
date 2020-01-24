@@ -38,6 +38,7 @@
                 android:background="@color/colorUnivLille"
                 android:minHeight="?attr/actionBarSize"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:navigationIcon="?attr/homeAsUpIndicator"
             />
 
             <ImageView
