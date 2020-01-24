@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MapActivity">
 
+
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -15,10 +16,27 @@
         mapbox:mapbox_cameraTargetLng="3.136460"
         mapbox:mapbox_cameraZoom="15" >
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorUnivLille">
+
+<androidx.appcompat.widget.AppCompatSpinner
+    android:id="@+id/campus_spinner"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@color/colorUnivLille"
+    android:outlineSpotShadowColor="@color/colorSplashText"
+    />
+
+
+        </androidx.appcompat.widget.Toolbar>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_incident"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="200dp"
             android:backgroundTint="@color/colorUnivLille"
@@ -26,7 +44,10 @@
             android:elevation="20dp"
             android:focusable="true"
             android:visibility="visible"
-            mapbox:pressedTranslationZ="12dp" />
+            mapbox:pressedTranslationZ="12dp"
+            android:src="@drawable/ic_add_black_24dp"
+            android:onClick="onButtonClick"
+            />
     </com.mapbox.mapboxsdk.maps.MapView>
 
 </FrameLayout>

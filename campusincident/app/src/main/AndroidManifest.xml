@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/campus_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".MapActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
