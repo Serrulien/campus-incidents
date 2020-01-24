@@ -17,7 +17,7 @@ import java.util.List;
 public class RecyclerNotifAdapter extends RecyclerView.Adapter<RecyclerNotifAdapter.MyViewHolder> {
 
 
-    private List<String> notifications = new ArrayList<>(Arrays.asList("hhhhhhhhhhh","dsfssssssssssssss","sdffsdfsdsd","sdlsfjlkfjsdlkfjsd"));
+    private List<String> notifications = new ArrayList<>(Arrays.asList("Incident signalé","Incident en cours de validation","Signalement validé","Incident en cours de résolution"));
 
     @Override
     public int getItemCount() {

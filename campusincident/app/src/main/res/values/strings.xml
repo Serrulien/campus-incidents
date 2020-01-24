@@ -14,4 +14,5 @@
     <string name="incident_date_text">Date du signalement :</string>
     <string name="incident_description_text">Description :</string>
     <string name="mapbox_access_token">pk.eyJ1IjoieWFoaWF0ZW5lIiwiYSI6ImNrNXBqdXM4aTA5YXIzbm8zdGd4NDhhc2EifQ.3ODc_wacOF4R9Hn-fXgaDg</string>
+    <string name="notifications">Notifications</string>
 </resources>
