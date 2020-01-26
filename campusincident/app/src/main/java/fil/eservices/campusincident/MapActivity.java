@@ -26,7 +26,6 @@ import java.util.ArrayList;
 public class MapActivity extends AppCompatActivity {
 
 
-    private static String MAP_TOKEN;
     private static String CAMPUS_CITE = "Campus Cité Scientifque";
     private static String CAMPUS_PBOIS = "Campus Pont De Bois";
     private static String CAMPUS_MOULINS = "Campus Moulins";
@@ -38,7 +37,7 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MAP_TOKEN=getString(R.string.mapbox_access_token);
+        String MAP_TOKEN = getString(R.string.mapbox_access_token);
 
         /**
          * Mettre en place la MapBox avec son token MAP_TOKEN
@@ -92,7 +91,7 @@ public class MapActivity extends AppCompatActivity {
 
                     mapView.getMapAsync(new OnMapReadyCallback() {
                         @Override
-                        public void onMapReady(MapboxMap mapboxMap) {
+                        public void onMapReady(@NonNull MapboxMap mapboxMap) {
                             // We'll maintain zoom level and tilt, just want to change position
                             CameraPosition old = mapboxMap.getCameraPosition();
                             CameraPosition pos = new CameraPosition.Builder()
@@ -108,7 +107,7 @@ public class MapActivity extends AppCompatActivity {
 
                     mapView.getMapAsync(new OnMapReadyCallback() {
                         @Override
-                        public void onMapReady(MapboxMap mapboxMap) {
+                        public void onMapReady(@NonNull MapboxMap mapboxMap) {
                             // We'll maintain zoom level and tilt, just want to change position
                             CameraPosition old = mapboxMap.getCameraPosition();
                             CameraPosition pos = new CameraPosition.Builder()
@@ -124,7 +123,7 @@ public class MapActivity extends AppCompatActivity {
 
                     mapView.getMapAsync(new OnMapReadyCallback() {
                         @Override
-                        public void onMapReady(MapboxMap mapboxMap) {
+                        public void onMapReady(@NonNull MapboxMap mapboxMap) {
                             // We'll maintain zoom level and tilt, just want to change position
                             CameraPosition old = mapboxMap.getCameraPosition();
                             CameraPosition pos = new CameraPosition.Builder()
@@ -183,7 +182,7 @@ public class MapActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }

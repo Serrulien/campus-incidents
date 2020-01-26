@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class RecyclerNotifAdapter extends RecyclerView.Adapter<RecyclerNotifAdap
         return notifications.size();
     }
 
+    @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -36,11 +38,11 @@ public class RecyclerNotifAdapter extends RecyclerView.Adapter<RecyclerNotifAdap
         holder.display(notification);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView notifTitle;
 
-        public MyViewHolder(final View itemView) {
+        MyViewHolder(final View itemView) {
             super(itemView);
 
             notifTitle = ((TextView) itemView.findViewById(R.id.notif_title));
@@ -55,7 +57,7 @@ public class RecyclerNotifAdapter extends RecyclerView.Adapter<RecyclerNotifAdap
             });
         }
 
-        public void display(String notif) {
+        void display(String notif) {
             notifTitle.setText(notif);
         }
     }
