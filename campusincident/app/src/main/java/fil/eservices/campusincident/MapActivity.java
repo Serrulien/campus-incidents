@@ -6,6 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -142,6 +145,37 @@ public class MapActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    /**
+     * Inflate the menu in map
+     * @param menu menu
+     * @return boolean
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_in_map, menu);
+        return true;
+    }
+
+    /**
+     * Action on selection of item in menu
+     * @param item item
+     * @return boolean
+     */
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logout:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case R.id.support:
+                startActivity(new Intent(this, MapActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
