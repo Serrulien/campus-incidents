@@ -23,7 +23,7 @@ public class DetailsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),MapActivity.class));
+                startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
             }
         });
     }

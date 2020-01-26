@@ -1,5 +1,7 @@
 package fil.eservices.campusincident;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +48,9 @@ public class RecyclerNotifAdapter extends RecyclerView.Adapter<RecyclerNotifAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    System.out.println("Item clicked");
+                    Context context = view.getContext();
+                    Intent myIntent = new Intent(context,   DetailsActivity.class);
+                    context.startActivity(myIntent);
                 }
             });
         }
