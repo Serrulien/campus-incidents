@@ -67,7 +67,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                android:src="@drawable/back_arrow" />
+                android:src="@drawable/back_arrow_dark" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

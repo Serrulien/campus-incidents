@@ -18,10 +18,6 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(){
-//        recyclerView = findViewById(R.id.recycler_view);
-//        recyclerNotifAdapter = new RecyclerNotifAdapter(this.getBaseContext(),this);
-//        recyclerView.setAdapter(recyclerNotifAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         final RecyclerView rv = (RecyclerView) findViewById(R.id.notif_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new RecyclerNotifAdapter());

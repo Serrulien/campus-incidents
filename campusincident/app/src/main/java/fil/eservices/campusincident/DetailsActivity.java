@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,7 +18,7 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setTitle(getString(R.string.app_name));
-        toolbar.setNavigationIcon(R.drawable.back_arrow);
+        toolbar.setNavigationIcon(R.drawable.back_arrow_dark);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
