@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity {
 
-
     private static String CAMPUS_CITE = "Campus Cité Scientifque";
     private static String CAMPUS_PBOIS = "Campus Pont De Bois";
     private static String CAMPUS_MOULINS = "Campus Moulins";
@@ -76,6 +75,7 @@ public class MapActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         spinnerCampus = toolbar.findViewById(R.id.campus_spinner);
+        toolbar.inflateMenu(R.menu.menu_in_map);
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(CAMPUS_CITE);
@@ -89,55 +89,12 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String campusName = parent.getItemAtPosition(position).toString();
-
                 if (campusName.equals(CAMPUS_CITE)){
-
-                    mapView.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                            // We'll maintain zoom level and tilt, just want to change position
-                            CameraPosition old = mapboxMap.getCameraPosition();
-                            CameraPosition pos = new CameraPosition.Builder()
-                                    .target(citeScientifique)
-                                    .zoom(old.zoom)
-                                    .tilt(old.tilt)
-                                    .build();
-                            mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(pos));
-                        }
-                    });
-
+                    mapPositionCampus(citeScientifique);
                 }else if(campusName.equals(CAMPUS_PBOIS)){
-
-                    mapView.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                            // We'll maintain zoom level and tilt, just want to change position
-                            CameraPosition old = mapboxMap.getCameraPosition();
-                            CameraPosition pos = new CameraPosition.Builder()
-                                    .target(pontDeBois)
-                                    .zoom(old.zoom)
-                                    .tilt(old.tilt)
-                                    .build();
-                            mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(pos));
-                        }
-                    });
-
+                    mapPositionCampus(pontDeBois);
                 }else {
-
-                    mapView.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull MapboxMap mapboxMap) {
-                            // We'll maintain zoom level and tilt, just want to change position
-                            CameraPosition old = mapboxMap.getCameraPosition();
-                            CameraPosition pos = new CameraPosition.Builder()
-                                    .target(moulins)
-                                    .zoom(old.zoom)
-                                    .tilt(old.tilt)
-                                    .build();
-                            mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(pos));
-                        }
-                    });
-
+                    mapPositionCampus(moulins);
                 }
             }
             @Override
@@ -145,6 +102,26 @@ public class MapActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Set camera map position when campus changes
+     * @param nomCampus name campus
+     */
+    private void mapPositionCampus(final LatLng nomCampus) {
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                // We'll maintain zoom level and tilt, just want to change position
+                CameraPosition old = mapboxMap.getCameraPosition();
+                CameraPosition pos = new CameraPosition.Builder()
+                        .target(nomCampus)
+                        .zoom(old.zoom)
+                        .tilt(old.tilt)
+                        .build();
+                mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(pos));
+            }
+        });
     }
 
 
