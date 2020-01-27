@@ -1,5 +1,6 @@
 package fil.eservices.campusincident;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -130,7 +131,9 @@ public class MapActivity extends AppCompatActivity {
      * @param menu menu
      * @return boolean
      */
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("MANUUUUUUUUUUUU", "onCreateOptionsMenu: inflate menu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_in_map, menu);
         return true;
@@ -141,14 +144,17 @@ public class MapActivity extends AppCompatActivity {
      * @param item item
      * @return boolean
      */
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Log.d("MANUUUUUUUUUUUU", "onOptionsItemSelected: item clicked");
         switch (item.getItemId()) {
             case R.id.logout:
-                startActivity(new Intent(this, MainActivity.class));
+                Log.d("MANUUUUUUUUUUUU", "onOptionsItemSelected: Logout");
+                startActivity(new Intent(getBaseContext(), MainActivity.class));
                 return true;
             case R.id.support:
-                startActivity(new Intent(this, MapActivity.class));
+                Log.d("MANUUUUUUUUUUUU", "onOptionsItemSelected: Support");
+                startActivity(new Intent(getBaseContext(), MapActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
