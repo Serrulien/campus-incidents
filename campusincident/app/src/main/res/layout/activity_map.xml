@@ -34,22 +34,6 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_incident"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="200dp"
-            android:backgroundTint="@color/colorUnivLille"
-            android:clickable="true"
-            android:elevation="20dp"
-            android:focusable="true"
-            android:visibility="visible"
-            mapbox:pressedTranslationZ="12dp"
-            android:src="@drawable/ic_add_black_24dp"
-            android:onClick="onButtonClick"
-            />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/notifications_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -65,6 +49,22 @@
             android:src="@drawable/ic_notifications_black_24dp"
             android:onClick="onButtonClickNotifications"
             />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add_incident"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SIGNALER"
+            android:backgroundTint="@color/colorUnivLille"
+            android:textColor="@color/colorSplashText"
+            android:layout_gravity="center"
+            android:focusable="true"
+            android:clickable="true"
+            android:onClick="onButtonClick"
+            android:layout_marginTop="200dp">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
     </com.mapbox.mapboxsdk.maps.MapView>
 
 </FrameLayout>
