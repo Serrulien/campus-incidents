@@ -205,7 +205,7 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public void onButtonClick(View view) {
-        Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
+        Intent myIntent = new Intent(getBaseContext(),   ReportActivity.class);
         startActivity(myIntent);
     }
 

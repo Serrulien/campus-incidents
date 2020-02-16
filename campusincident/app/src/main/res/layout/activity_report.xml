@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReportActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="831dp"
+            android:layout_margin="10dp"
+            tools:layout_editor_absoluteY="1dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_title_incident"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:hint="@string/incident_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:hint="@string/text_description"
+                app:layout_constraintBottom_toTopOf="@+id/shapeableImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_title_incident"
+                app:layout_constraintVertical_bias="0.0">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeableImageView"
+                android:layout_width="228dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="232dp"
+                android:layout_marginEnd="80dp"
+                android:src="@mipmap/picture_holder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnCaptureImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_circle_outline_black_24dp"
+                app:layout_constraintBottom_toTopOf="@+id/reportMapView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.403"
+                app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+                app:layout_constraintTop_toBottomOf="@+id/text_description"
+                app:layout_constraintVertical_bias="0.419">
+
+            </androidx.appcompat.widget.AppCompatImageButton>
+
+            <com.mapbox.mapboxsdk.maps.MapView
+                android:id="@+id/reportMapView"
+                android:layout_width="329dp"
+                android:layout_height="174dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shapeableImageView"
+                app:mapbox_cameraTargetLat="50.609621"
+                app:mapbox_cameraTargetLng="3.136460"
+                app:mapbox_cameraZoom="15">
+
+            </com.mapbox.mapboxsdk.maps.MapView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_categories"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.098"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reportMapView"
+                app:layout_constraintVertical_bias="0.0">
+
+            </androidx.appcompat.widget.AppCompatTextView>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/text_cat1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_parking"
+                app:buttonTint="#009688"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_categories">
+
+            </com.google.android.material.checkbox.MaterialCheckBox>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/text_cat2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_panneau"
+                app:buttonTint="#009688"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_cat3">
+
+            </com.google.android.material.checkbox.MaterialCheckBox>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/text_cat3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cat_espace"
+                app:buttonTint="#009688"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_cat4">
+
+            </com.google.android.material.checkbox.MaterialCheckBox>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/text_cat4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/cat_proprete"
+                app:buttonTint="#009688"
+                app:layout_constraintEnd_toEndOf="@+id/text_cat1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_cat1">
+
+            </com.google.android.material.checkbox.MaterialCheckBox>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/send_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:backgroundTint="@color/colorUnivLille"
+                android:text="@string/send_report"
+                android:textColor="@color/colorSplashText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_cat3"
+                app:layout_constraintVertical_bias="0.0">
+
+            </androidx.appcompat.widget.AppCompatButton>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
