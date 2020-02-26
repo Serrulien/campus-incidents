@@ -1,5 +1,7 @@
 package fil.eservices.campusincident;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 import android.widget.*;
@@ -29,19 +31,19 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.plugins.annotation.Circle;
-import com.mapbox.mapboxsdk.plugins.annotation.CircleManager;
-import com.mapbox.mapboxsdk.plugins.annotation.CircleOptions;
-import com.mapbox.mapboxsdk.plugins.annotation.OnCircleDragListener;
+import com.mapbox.mapboxsdk.plugins.annotation.*;
+import com.mapbox.mapboxsdk.utils.BitmapUtils;
 import com.mapbox.mapboxsdk.utils.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MapActivity extends AppCompatActivity implements
         OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener{
 
+    private static final String ID_ICON = "incident_marker";
     private static String CAMPUS_CITE = "Campus Cité Scientifque";
     private static String CAMPUS_PBOIS = "Campus Pont De Bois";
     private static String CAMPUS_MOULINS = "Campus Moulins";
@@ -49,7 +51,7 @@ public class MapActivity extends AppCompatActivity implements
     private Spinner spinnerCampus;
     private Toolbar toolbar;
     private CameraUpdate cameraUpdate;
-    private CircleManager circleManager;
+    private SymbolManager symbolManager;
     private MapboxMap mapboxMap;
     private LocationComponent locationComponent;
     private boolean isInTrackingMode;
@@ -81,32 +83,40 @@ public class MapActivity extends AppCompatActivity implements
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                makeFixedCircle(style);
+                addSymbolMarker(style);
                 enableLocationComponent(style);
             }
         });
     }
 
-    private void makeFixedCircle(Style style){
-        // create circle manager
-        circleManager = new CircleManager(mapView, mapboxMap, style);
-        circleManager.addClickListener(circle -> Toast.makeText(MapActivity.this,
-                String.format("Circle clicked %s", circle.getId()),
-                Toast.LENGTH_SHORT
-        ).show());
-        circleManager.addLongClickListener(circle -> Toast.makeText(MapActivity.this,
-                String.format("Circle long clicked %s", circle.getId()),
-                Toast.LENGTH_SHORT
-        ).show());
+    private void addSymbolMarker(Style style){
+        // create symbol manager
+        symbolManager = new SymbolManager(mapView, mapboxMap, style);
+        // set non data driven properties
+        symbolManager.setIconAllowOverlap(true);
+        symbolManager.setTextAllowOverlap(true);
 
+        symbolManager.addClickListener(symbol -> Toast.makeText(MapActivity.this,
+                String.format("symbol clicked %s", symbol.getId()),
+                Toast.LENGTH_SHORT).show());
+
+        symbolManager.addLongClickListener(symbol -> Toast.makeText(MapActivity.this,
+                String.format("symbol long clicked %s", symbol.getId()),
+                Toast.LENGTH_SHORT).show());
+
+        // symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
+
+        style.addImage(ID_ICON,
+                Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))),
+                true);
 
         // create a fixed circle
-        CircleOptions circleOptions = new CircleOptions()
+        SymbolOptions symbolOptions = new SymbolOptions()
                 .withLatLng(new LatLng(50.609621, 3.136460))
-                .withCircleColor(ColorUtils.colorToRgbaString(Color.RED))
-                .withCircleRadius(12f)
+                .withIconImage(ID_ICON)
+                .withIconSize(1.5f)
                 .withDraggable(true);
-        circleManager.create(circleOptions);
+        symbolManager.create(symbolOptions);
     }
 
 
