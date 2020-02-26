@@ -23,4 +23,5 @@
     <string name="cat_espace">Espaces verts</string>
     <string name="cat_proprete">Propreté du campus</string>
     <string name="send_report">ENVOYER</string>
+    <string name="current_location">Current location</string>
 </resources>
