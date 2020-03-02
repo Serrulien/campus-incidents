@@ -112,10 +112,10 @@ public class MapActivity extends AppCompatActivity implements
                         Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))),
                         true);
 
-// Create an empty GeoJSON source using the empty feature collection
+                // Create an empty GeoJSON source using the empty feature collection
                 setUpSource(style);
 
-// Set up a new symbol layer for displaying the searched location's feature coordinates
+                // Set up a new symbol layer for displaying the searched location's feature coordinates
                 setupLayer(style);
             }
         });
@@ -140,17 +140,17 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     private void addUserLocations() {
-        home = CarmenFeature.builder().text("Mapbox SF Office")
-                .geometry(Point.fromLngLat(-122.3964485, 37.7912561))
-                .placeName("50 Beale St, San Francisco, CA")
-                .id("mapbox-sf")
+        home = CarmenFeature.builder().text("Université de Lille Campus Pont de Bois")
+                .geometry(Point.fromLngLat(3.126149,50.629212))
+                .placeName("Domaine Universitaire du Pont de Bois, 3 Rue du Barreau, 59650 Villeneuve-d'Ascq")
+                .id("univ-pb")
                 .properties(new JsonObject())
                 .build();
 
-        work = CarmenFeature.builder().text("Mapbox DC Office")
-                .placeName("740 15th Street NW, Washington DC")
-                .geometry(Point.fromLngLat(-77.0338348, 38.899750))
-                .id("mapbox-dc")
+        work = CarmenFeature.builder().text("Université de Lille Campus Cité Scientifique")
+                .placeName("Cité Scientifique, 59650 Villeneuve-d'Ascq")
+                .geometry(Point.fromLngLat(3.138031,50.609209))
+                .id("univ-sc")
                 .properties(new JsonObject())
                 .build();
     }
@@ -171,11 +171,11 @@ public class MapActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_AUTOCOMPLETE) {
 
-// Retrieve selected location's CarmenFeature
+            // Retrieve selected location's CarmenFeature
             CarmenFeature selectedCarmenFeature = PlaceAutocomplete.getPlace(data);
 
-// Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
-// Then retrieve and update the source designated for showing a selected location's symbol layer icon
+            // Create a new FeatureCollection and add a new Feature to it using selectedCarmenFeature above.
+            // Then retrieve and update the source designated for showing a selected location's symbol layer icon
 
             if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
@@ -186,7 +186,7 @@ public class MapActivity extends AppCompatActivity implements
                                 new Feature[] {Feature.fromJson(selectedCarmenFeature.toJson())}));
                     }
 
-// Move map camera to the selected location
+                    // Move map camera to the selected location
                     mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(
                             new CameraPosition.Builder()
                                     .target(new LatLng(((Point) selectedCarmenFeature.geometry()).latitude(),
@@ -219,7 +219,7 @@ public class MapActivity extends AppCompatActivity implements
                 Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))),
                 true);
 
-        // create a fixed circle
+        // create a fixed symbol
         SymbolOptions symbolOptions = new SymbolOptions()
                 .withLatLng(new LatLng(50.609621, 3.136460))
                 .withIconImage(ID_ICON)
@@ -391,7 +391,6 @@ public class MapActivity extends AppCompatActivity implements
             finish();
         }
     }
-
 
 
     /**
