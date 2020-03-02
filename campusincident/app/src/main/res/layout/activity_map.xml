@@ -34,15 +34,34 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/back_to_camera_tracking_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="150dp"
+                android:src="@drawable/ic_my_location"
+        />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_location_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:srcCompat="@android:drawable/ic_search_category_default" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/notifications_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="120dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/colorUnivLille"
             android:clickable="true"
-            android:elevation="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="80dp"
+            android:layout_gravity="end|bottom"
             android:focusable="true"
             android:visibility="visible"
             mapbox:pressedTranslationZ="12dp"
@@ -50,17 +69,7 @@
             android:onClick="onButtonClickNotifications"
             />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/back_to_camera_tracking_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/ic_my_location"
 
-                />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_incident"
