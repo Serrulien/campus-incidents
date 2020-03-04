@@ -14,11 +14,11 @@
         android:roundIcon="@mipmap/campus_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReportActivity"></activity>
-        <activity android:name=".DetailsActivity" />
-        <activity android:name=".NotificationActivity" />
-        <activity android:name=".MapActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".presentation.ReportActivity"></activity>
+        <activity android:name=".presentation.DetailsActivity" />
+        <activity android:name=".presentation.NotificationActivity" />
+        <activity android:name=".presentation.MapActivity" />
+        <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

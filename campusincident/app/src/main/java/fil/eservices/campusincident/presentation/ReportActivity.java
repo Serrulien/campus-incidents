@@ -1,4 +1,4 @@
-package fil.eservices.campusincident;
+package fil.eservices.campusincident.presentation;
 
 import android.Manifest;
 import android.Manifest.permission;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import fil.eservices.campusincident.R;
 
 public class ReportActivity extends AppCompatActivity {
 

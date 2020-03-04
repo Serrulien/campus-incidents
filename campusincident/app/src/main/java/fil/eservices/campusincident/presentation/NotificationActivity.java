@@ -1,4 +1,4 @@
-package fil.eservices.campusincident;
+package fil.eservices.campusincident.presentation;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import fil.eservices.campusincident.R;
 
 public class NotificationActivity extends AppCompatActivity {
     @Override

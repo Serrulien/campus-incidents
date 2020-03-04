@@ -1,9 +1,10 @@
-package fil.eservices.campusincident;
+package fil.eservices.campusincident.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import fil.eservices.campusincident.R;
 
 import java.util.Objects;
 

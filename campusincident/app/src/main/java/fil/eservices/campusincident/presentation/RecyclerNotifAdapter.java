@@ -1,4 +1,4 @@
-package fil.eservices.campusincident;
+package fil.eservices.campusincident.presentation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import fil.eservices.campusincident.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

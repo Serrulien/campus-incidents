@@ -1,4 +1,4 @@
-package fil.eservices.campusincident;
+package fil.eservices.campusincident.presentation;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -42,18 +42,21 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import com.mapbox.mapboxsdk.utils.BitmapUtils;
+import fil.eservices.campusincident.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.*;
 
 public class MapActivity extends AppCompatActivity implements
-        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener{
+        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener, MapboxMap.OnMapClickListener {
 
-    private static final String ID_ICON = "incident_marker";
+    private static final String GEOJSON_SOURCE_ID = "GEOJSON_SOURCE_ID";
+    private static final String MARKER_IMAGE_ID = "MARKER_IMAGE_ID";
+    private static final String MARKER_LAYER_ID = "MARKER_LAYER_ID";
+
     private static String CAMPUS_CITE = "Campus Cité Scientifque";
     private static String CAMPUS_PBOIS = "Campus Pont De Bois";
     private static String CAMPUS_MOULINS = "Campus Moulins";
@@ -66,13 +69,13 @@ public class MapActivity extends AppCompatActivity implements
     private LocationComponent locationComponent;
     private boolean isInTrackingMode;
     private PermissionsManager permissionsManager;
+    private FeatureCollection featureCollection;
 
 
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
-    private CarmenFeature home;
-    private CarmenFeature work;
-    private String geojsonSourceLayerId = "geojsonSourceLayerId";
-    private String symbolIconId = "symbolIconId";
+    private CarmenFeature campusPB;
+    private CarmenFeature campusSC;
+    private GeoJsonSource source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +100,13 @@ public class MapActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
+        mapboxMap.addOnMapClickListener(this);
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                addSymbolMarker(style);
+                setUpData(style);
+                //addSymbolMarker(style);
+                symbolManager = new SymbolManager(mapView, mapboxMap, style);
                 enableLocationComponent(style);
                 initSearchFab();
                 addUserLocations();
@@ -108,17 +114,85 @@ public class MapActivity extends AppCompatActivity implements
 //                style.addImage(symbolIconId, BitmapFactory.decodeResource(
 //                        MapActivity.this.getResources(), R.drawable.incident_marker));
 
-                style.addImage(ID_ICON,
-                        Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))),
-                        true);
+                // setUpImage(style);
 
                 // Create an empty GeoJSON source using the empty feature collection
-                setUpSource(style);
+                // setUpSource(style);
 
                 // Set up a new symbol layer for displaying the searched location's feature coordinates
-                setupLayer(style);
+                // setUpMarkerLayer(style);
+
             }
         });
+    }
+
+    @Override
+    public boolean onMapClick(@NonNull LatLng point) {
+        // set non data driven properties
+        symbolManager.setIconAllowOverlap(true);
+        symbolManager.setTextAllowOverlap(true);
+
+        symbolManager.addClickListener(symbol -> Toast.makeText(MapActivity.this,
+                String.format("symbol clicked %s", symbol.getId()),
+                Toast.LENGTH_SHORT).show());
+
+//        symbolManager.addLongClickListener(symbol -> Toast.makeText(MapActivity.this,
+//                String.format("symbol long clicked %s", symbol.getId()),
+//                Toast.LENGTH_SHORT).show());
+
+        symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
+
+        // create a fixed symbol
+        SymbolOptions symbolOptions = new SymbolOptions()
+                .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
+                .withIconImage(MARKER_IMAGE_ID)
+                .withIconSize(1.5f)
+                .withDraggable(true);
+        symbolManager.create(symbolOptions);
+        return true;
+    }
+
+    /**
+     * Sets up all of the sources and layers needed
+     *
+     */
+    public void setUpData(@NonNull Style loadedStyle) {
+        if (mapboxMap != null) {
+            mapboxMap.getStyle(style -> {
+                setUpSource(style);
+                setUpImage(style);
+                setUpMarkerLayer(style);
+            });
+        }
+    }
+
+    /**
+     * Adds the GeoJSON source to the map
+     */
+    private void setUpSource(@NonNull Style loadedStyle) {
+        source = new GeoJsonSource(GEOJSON_SOURCE_ID, featureCollection);
+        loadedStyle.addSource(source);
+    }
+
+    /**
+     * Setup a layer with maki icons, eg. west coast city.
+     */
+    private void setUpMarkerLayer(@NonNull Style loadedStyle) {
+        loadedStyle.addLayer(new SymbolLayer(MARKER_LAYER_ID, GEOJSON_SOURCE_ID)
+                .withProperties(
+                        iconImage(MARKER_IMAGE_ID),
+                        iconAllowOverlap(true),
+                        iconOffset(new Float[] {0f, -8f})
+                ));
+    }
+
+    /**
+     * Adds the marker image to the map for use as a SymbolLayer icon
+     */
+    private void setUpImage(@NonNull Style loadedMapStyle) {
+//        loadedMapStyle.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(
+//                this.getResources(), R.drawable.incident_marker));
+        loadedMapStyle.addImage(MARKER_IMAGE_ID, Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))), true);
     }
 
     private void initSearchFab() {
@@ -130,8 +204,8 @@ public class MapActivity extends AppCompatActivity implements
                         .placeOptions(PlaceOptions.builder()
                                 .backgroundColor(Color.parseColor("#EEEEEE"))
                                 .limit(10)
-                                .addInjectedFeature(home)
-                                .addInjectedFeature(work)
+                                .addInjectedFeature(campusPB)
+                                .addInjectedFeature(campusSC)
                                 .build(PlaceOptions.MODE_CARDS))
                         .build(MapActivity.this);
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
@@ -140,30 +214,19 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     private void addUserLocations() {
-        home = CarmenFeature.builder().text("Université de Lille Campus Pont de Bois")
+        campusPB = CarmenFeature.builder().text("Université de Lille Campus Pont de Bois")
                 .geometry(Point.fromLngLat(3.126149,50.629212))
                 .placeName("Domaine Universitaire du Pont de Bois, 3 Rue du Barreau, 59650 Villeneuve-d'Ascq")
                 .id("univ-pb")
                 .properties(new JsonObject())
                 .build();
 
-        work = CarmenFeature.builder().text("Université de Lille Campus Cité Scientifique")
+        campusSC = CarmenFeature.builder().text("Université de Lille Campus Cité Scientifique")
                 .placeName("Cité Scientifique, 59650 Villeneuve-d'Ascq")
                 .geometry(Point.fromLngLat(3.138031,50.609209))
                 .id("univ-sc")
                 .properties(new JsonObject())
                 .build();
-    }
-
-    private void setUpSource(@NonNull Style loadedMapStyle) {
-        loadedMapStyle.addSource(new GeoJsonSource(geojsonSourceLayerId));
-    }
-
-    private void setupLayer(@NonNull Style loadedMapStyle) {
-        loadedMapStyle.addLayer(new SymbolLayer("SYMBOL_LAYER_ID", geojsonSourceLayerId).withProperties(
-                iconImage(ID_ICON),
-                iconOffset(new Float[] {0f, -8f})
-        ));
     }
 
     @Override
@@ -180,7 +243,7 @@ public class MapActivity extends AppCompatActivity implements
             if (mapboxMap != null) {
                 Style style = mapboxMap.getStyle();
                 if (style != null) {
-                    GeoJsonSource source = style.getSourceAs(geojsonSourceLayerId);
+                    GeoJsonSource source = style.getSourceAs(GEOJSON_SOURCE_ID);
                     if (source != null) {
                         source.setGeoJson(FeatureCollection.fromFeatures(
                                 new Feature[] {Feature.fromJson(selectedCarmenFeature.toJson())}));
@@ -192,42 +255,11 @@ public class MapActivity extends AppCompatActivity implements
                                     .target(new LatLng(((Point) selectedCarmenFeature.geometry()).latitude(),
                                             ((Point) selectedCarmenFeature.geometry()).longitude()))
                                     .zoom(14)
-                                    .build()), 4000);
+                                    .build()), 1000);
                 }
             }
         }
     }
-
-    private void addSymbolMarker(Style style){
-        // create symbol manager
-        symbolManager = new SymbolManager(mapView, mapboxMap, style);
-        // set non data driven properties
-        symbolManager.setIconAllowOverlap(true);
-        symbolManager.setTextAllowOverlap(true);
-
-        symbolManager.addClickListener(symbol -> Toast.makeText(MapActivity.this,
-                String.format("symbol clicked %s", symbol.getId()),
-                Toast.LENGTH_SHORT).show());
-
-        symbolManager.addLongClickListener(symbol -> Toast.makeText(MapActivity.this,
-                String.format("symbol long clicked %s", symbol.getId()),
-                Toast.LENGTH_SHORT).show());
-
-        // symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
-
-        style.addImage(ID_ICON,
-                Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))),
-                true);
-
-        // create a fixed symbol
-        SymbolOptions symbolOptions = new SymbolOptions()
-                .withLatLng(new LatLng(50.609621, 3.136460))
-                .withIconImage(ID_ICON)
-                .withIconSize(1.5f)
-                .withDraggable(true);
-        symbolManager.create(symbolOptions);
-    }
-
 
     private void setDefaultLocations(){
         final LatLng citeScientifique = new LatLng(50.609621, 3.136460);
@@ -285,7 +317,6 @@ public class MapActivity extends AppCompatActivity implements
         });
     }
 
-
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         // Check if permissions are enabled and if not request
@@ -295,8 +326,6 @@ public class MapActivity extends AppCompatActivity implements
             LocationComponentOptions customLocationComponentOptions = LocationComponentOptions.builder(this)
                     .elevation(5)
                     .accuracyAlpha(.6f)
-                    .accuracyColor(Color.BLUE)
-                    .backgroundDrawable(R.drawable.ic_my_location)
                     .build();
 
             // Get an instance of the component
@@ -392,7 +421,6 @@ public class MapActivity extends AppCompatActivity implements
         }
     }
 
-
     /**
      * Inflate the menu in map
      * @param menu menu
@@ -427,7 +455,6 @@ public class MapActivity extends AppCompatActivity implements
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     public void onResume() {

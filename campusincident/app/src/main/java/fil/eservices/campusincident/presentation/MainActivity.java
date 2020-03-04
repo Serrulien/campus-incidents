@@ -1,4 +1,4 @@
-package fil.eservices.campusincident;
+package fil.eservices.campusincident.presentation;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
+import fil.eservices.campusincident.R;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
