@@ -25,29 +25,19 @@
                 app:srcCompat="@drawable/back_arrow_dark"
                 tools:ignore="VectorDrawableCompat"/>
         <TextView
-                android:id="@+id/name_trip_new_housing"
+                android:id="@+id/name_trip_new_incident"
                 android:layout_marginEnd="64dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Incident"
+                android:text="@string/signaler_un_incident"
                 android:textSize="25sp">
         </TextView>
 
 
     </LinearLayout>
-    <TextView
-            android:id="@+id/title_new_housing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add_incident_title_activity"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:textSize="18sp">
-    </TextView>
     <LinearLayout
-            android:id="@+id/LinearLayout_progress_bar_new_housing"
+            android:id="@+id/LinearLayout_progress_bar_new_incident"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -55,7 +45,7 @@
             android:visibility="gone"
     >
         <ProgressBar
-                android:id="@+id/progress_bar_new_housing"
+                android:id="@+id/progress_bar_new_incident"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -68,15 +58,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         <LinearLayout
-                android:id="@+id/LinearLayout_new_housing"
+                android:id="@+id/LinearLayout_new_incident"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                tools:context=".presentation.housing.EditHousingActivity">
+                tools:context=".presentation.ReportActivity">
 
-
-            <!--   android:inputType="textCapWords"-->
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/report_title_wrapper"
                     android:layout_width="match_parent"
@@ -94,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorUnivLille"
                         android:ems="10"
-                        android:hint="Titre"
+                        android:hint="@string/title_hint"
                         android:inputType="textPersonName"
                         android:textCursorDrawable="@color/colorUnivLille" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorUnivLille"
                         android:ems="10"
-                        android:hint="Description"
+                        android:hint="@string/description_hint"
                         android:inputType="textPersonName"
                         android:textCursorDrawable="@color/colorUnivLille" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -151,7 +139,7 @@
                     android:shadowDx="0"
                     android:shadowDy="0"
                     android:shadowRadius="5"
-                    android:text="Prendre une photo"
+                    android:text="@string/take_photo"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     android:layout_gravity="center"/>
@@ -216,12 +204,12 @@
 
                         android:backgroundTint="@color/colorUnivLille"
                         android:inputType="textPersonName"
-                        android:hint="Autres"
+                        android:hint="@string/other_cat"
                         android:textCursorDrawable="@color/colorUnivLille" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                    android:id="@+id/btn_create_form_housing"
+                    android:id="@+id/btn_create_incident"
                     android:layout_width="wrap_content"
                     android:padding="10dp"
                     android:layout_marginBottom="10dp"
@@ -232,7 +220,7 @@
                     android:shadowDx="0"
                     android:shadowDy="0"
                     android:shadowRadius="5"
-                    android:text="Créer"
+                    android:text="@string/create_incident"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
         </LinearLayout>

@@ -2,6 +2,7 @@ package fil.eservices.campusincident.presentation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,12 +42,10 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-import com.mapbox.mapboxsdk.utils.BitmapUtils;
 import fil.eservices.campusincident.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.*;
 
@@ -146,7 +145,7 @@ public class MapActivity extends AppCompatActivity implements
         SymbolOptions symbolOptions = new SymbolOptions()
                 .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
                 .withIconImage(MARKER_IMAGE_ID)
-                .withIconSize(1.5f)
+                .withIconSize(0.5f)
                 .withDraggable(true);
         symbolManager.create(symbolOptions);
         return true;
@@ -190,9 +189,9 @@ public class MapActivity extends AppCompatActivity implements
      * Adds the marker image to the map for use as a SymbolLayer icon
      */
     private void setUpImage(@NonNull Style loadedMapStyle) {
-//        loadedMapStyle.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(
-//                this.getResources(), R.drawable.incident_marker));
-        loadedMapStyle.addImage(MARKER_IMAGE_ID, Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))), true);
+        loadedMapStyle.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(
+                this.getResources(), R.drawable.red_marker));
+        //loadedMapStyle.addImage(MARKER_IMAGE_ID, Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))), true);
     }
 
     private void initSearchFab() {
@@ -491,6 +490,7 @@ public class MapActivity extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        symbolManager.onDestroy();
     }
 
     @Override
