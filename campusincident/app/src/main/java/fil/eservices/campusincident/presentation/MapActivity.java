@@ -50,7 +50,7 @@ import java.util.List;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.*;
 
 public class MapActivity extends AppCompatActivity implements
-        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener, MapboxMap.OnMapClickListener {
+        OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener, MapboxMap.OnMapLongClickListener {
 
     private static final String GEOJSON_SOURCE_ID = "GEOJSON_SOURCE_ID";
     private static final String MARKER_IMAGE_ID = "MARKER_IMAGE_ID";
@@ -99,35 +99,24 @@ public class MapActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        mapboxMap.addOnMapClickListener(this);
+        mapboxMap.addOnMapLongClickListener(this);
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 setUpData(style);
-                //addSymbolMarker(style);
                 symbolManager = new SymbolManager(mapView, mapboxMap, style);
                 enableLocationComponent(style);
                 initSearchFab();
                 addUserLocations();
-                // Add the symbol layer icon to map for future use
-//                style.addImage(symbolIconId, BitmapFactory.decodeResource(
-//                        MapActivity.this.getResources(), R.drawable.incident_marker));
-
-                // setUpImage(style);
-
-                // Create an empty GeoJSON source using the empty feature collection
-                // setUpSource(style);
-
-                // Set up a new symbol layer for displaying the searched location's feature coordinates
-                // setUpMarkerLayer(style);
-
             }
         });
     }
 
     @Override
-    public boolean onMapClick(@NonNull LatLng point) {
+    public boolean onMapLongClick(@NonNull LatLng point) {
         // set non data driven properties
+
+        symbolManager.deleteAll();
         symbolManager.setIconAllowOverlap(true);
         symbolManager.setTextAllowOverlap(true);
 
@@ -139,7 +128,7 @@ public class MapActivity extends AppCompatActivity implements
 //                String.format("symbol long clicked %s", symbol.getId()),
 //                Toast.LENGTH_SHORT).show());
 
-        symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
+        //symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
 
         // create a fixed symbol
         SymbolOptions symbolOptions = new SymbolOptions()
@@ -147,6 +136,7 @@ public class MapActivity extends AppCompatActivity implements
                 .withIconImage(MARKER_IMAGE_ID)
                 .withIconSize(0.5f)
                 .withDraggable(true);
+
         symbolManager.create(symbolOptions);
         return true;
     }
@@ -180,9 +170,10 @@ public class MapActivity extends AppCompatActivity implements
         loadedStyle.addLayer(new SymbolLayer(MARKER_LAYER_ID, GEOJSON_SOURCE_ID)
                 .withProperties(
                         iconImage(MARKER_IMAGE_ID),
+                        iconSize(0.5f),
                         iconAllowOverlap(true),
-                        iconOffset(new Float[] {0f, -8f})
-                ));
+                        iconOffset(new Float[] {0f, -8f}
+                )));
     }
 
     /**
@@ -191,7 +182,6 @@ public class MapActivity extends AppCompatActivity implements
     private void setUpImage(@NonNull Style loadedMapStyle) {
         loadedMapStyle.addImage(MARKER_IMAGE_ID, BitmapFactory.decodeResource(
                 this.getResources(), R.drawable.red_marker));
-        //loadedMapStyle.addImage(MARKER_IMAGE_ID, Objects.requireNonNull(BitmapUtils.getBitmapFromDrawable(getResources().getDrawable(R.drawable.incident_marker))), true);
     }
 
     private void initSearchFab() {
