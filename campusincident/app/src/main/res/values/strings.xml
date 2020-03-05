@@ -35,4 +35,8 @@
     <string name="signaler_un_incident">Signaler un incident</string>
     <string name="incident_details_title">Détails de l\'incident</string>
     <string name="incident_notifications">Notifications</string>
+    <string name="create">Créer</string>
+    <string name="cancel">Annuler</string>
+    <string name="dialog_message">Voulez-vous continuer ?</string>
+    <string name="dialog_title">Confirmation</string>
 </resources>

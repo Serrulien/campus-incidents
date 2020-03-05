@@ -1,6 +1,8 @@
 package fil.eservices.campusincident.presentation;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -36,6 +38,8 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
+import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
@@ -120,9 +124,15 @@ public class MapActivity extends AppCompatActivity implements
         symbolManager.setIconAllowOverlap(true);
         symbolManager.setTextAllowOverlap(true);
 
-        symbolManager.addClickListener(symbol -> Toast.makeText(MapActivity.this,
-                String.format("symbol clicked %s", symbol.getId()),
-                Toast.LENGTH_SHORT).show());
+        // Add click listener to open details activity
+        symbolManager.addClickListener(new OnSymbolClickListener() {
+            @Override
+            public void onAnnotationClick(Symbol symbol) {
+                Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
 
 //        symbolManager.addLongClickListener(symbol -> Toast.makeText(MapActivity.this,
 //                String.format("symbol long clicked %s", symbol.getId()),
@@ -365,6 +375,7 @@ public class MapActivity extends AppCompatActivity implements
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     @SuppressWarnings( {"MissingPermission"})
     @Override
     public void onLocationComponentClick() {

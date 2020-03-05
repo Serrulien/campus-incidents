@@ -23,7 +23,7 @@
             android:layout_height="50dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_notifications_black_24dp" />
+            tools:src="@drawable/notification_ulille" />
 
         <TextView
             android:id="@+id/notif_title"
