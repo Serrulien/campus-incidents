@@ -2,7 +2,6 @@ package fil.eservices.campusincident.presentation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -90,6 +89,11 @@ public class MapActivity extends AppCompatActivity implements
          */
         Mapbox.getInstance(getApplicationContext(), MAP_TOKEN);
         setContentView(R.layout.activity_map);
+
+        toolbar = findViewById(R.id.toolbar);
+        spinnerCampus = toolbar.findViewById(R.id.campus_spinner);
+        toolbar.inflateMenu(R.menu.activity_map);
+        setSupportActionBar(toolbar);
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -265,10 +269,6 @@ public class MapActivity extends AppCompatActivity implements
         final LatLng pontDeBois = new LatLng(50.628211, 3.126170);
         final LatLng moulins = new LatLng(50.619456, 3.068495);
 
-        toolbar = findViewById(R.id.toolbar);
-        spinnerCampus = toolbar.findViewById(R.id.campus_spinner);
-        toolbar.inflateMenu(R.menu.menu_in_map);
-
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(CAMPUS_CITE);
         arrayList.add(CAMPUS_PBOIS);
@@ -428,11 +428,11 @@ public class MapActivity extends AppCompatActivity implements
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("MANUUUUUUUUUUUU", "onCreateOptionsMenu: inflate menu");
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_in_map, menu);
+        inflater.inflate(R.menu.activity_map, menu);
         return true;
     }
+
 
     /**
      * Action on selection of item in menu
@@ -441,15 +441,12 @@ public class MapActivity extends AppCompatActivity implements
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("MANUUUUUUUUUUUU", "onOptionsItemSelected: item clicked");
         switch (item.getItemId()) {
             case R.id.logout:
-                Log.d("MANUUUUUUUUUUUU", "onOptionsItemSelected: Logout");
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
+                finish();
                 return true;
             case R.id.support:
-                Log.d("MANUUUUUUUUUUUU", "onOptionsItemSelected: Support");
-                startActivity(new Intent(getBaseContext(), MapActivity.class));
+                Toast.makeText(this, "Support pas encore disponible", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
