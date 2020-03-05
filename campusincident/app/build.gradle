@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "fil.eservices.campusincident"
-        minSdkVersion 19
+        minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -21,6 +21,19 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
+}
+
+ext {
+    swagger_annotations_version = "1.5.0"
+    gson_version = "2.3.1"
+    httpmime_version = "4.5.2"
+    volley_version = "1.0.0"
+    junit_version = "4.12"
+    robolectric_version = "3.0"
+    concurrent_unit_version = "0.4.2"
 }
 
 dependencies {
@@ -41,4 +54,13 @@ dependencies {
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v8:0.7.0'
 
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-places-v8:0.9.0'
+
+    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+    compile "com.google.code.gson:gson:$gson_version"
+    compile "org.apache.httpcomponents:httpmime:$httpmime_version"
+    compile "com.android.volley:volley:${volley_version}"
+    testCompile "junit:junit:$junit_version"
+    testCompile "org.robolectric:robolectric:${robolectric_version}"
+    testCompile "net.jodah:concurrentunit:${concurrent_unit_version}"
+
 }
