@@ -26,6 +26,7 @@
     android:id="@+id/campus_spinner"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
+    android:backgroundTint="@color/colorUnivLille"
     />
 
 
