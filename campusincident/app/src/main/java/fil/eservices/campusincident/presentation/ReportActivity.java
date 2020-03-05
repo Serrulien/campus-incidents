@@ -2,7 +2,9 @@ package fil.eservices.campusincident.presentation;
 
 import android.Manifest;
 import android.Manifest.permission;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -27,6 +29,7 @@ public class ReportActivity extends AppCompatActivity {
     private static final int PERMISSION_CODE = 1000;
     private int IMAGE_CAPTURE_CODE = 1001;
     private ImageButton backButton;
+    private Button btnCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_incident);
         takePhotoBtn();
         backButton();
+        setBtnCreate();
     }
 
     private void backButton(){
@@ -44,6 +48,39 @@ public class ReportActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setBtnCreate(){
+        btnCreate = findViewById(R.id.btn_create_incident);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDialogBox();
+            }
+        });
+    }
+
+    private void setDialogBox(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
+
+
+        // Add the buttons
+        builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void takePhotoBtn(){
