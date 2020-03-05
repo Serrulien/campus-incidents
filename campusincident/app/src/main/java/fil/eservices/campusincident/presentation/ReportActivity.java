@@ -20,6 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import fil.eservices.campusincident.R;
 
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.GREEN;
+import static android.graphics.Color.RED;
+import static android.graphics.Color.parseColor;
+
+
 public class ReportActivity extends AppCompatActivity {
 
     private ImageView imageView;
@@ -30,6 +36,7 @@ public class ReportActivity extends AppCompatActivity {
     private int IMAGE_CAPTURE_CODE = 1001;
     private ImageButton backButton;
     private Button btnCreate;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,7 @@ public class ReportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_incident);
         takePhotoBtn();
         backButton();
+        builder = new AlertDialog.Builder(this);
         setBtnCreate();
     }
 
@@ -61,8 +69,6 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void setDialogBox(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         // 2. Chain together various setter methods to set the dialog characteristics
         builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
 
@@ -70,17 +76,26 @@ public class ReportActivity extends AppCompatActivity {
         // Add the buttons
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
                 finish();
             }
         });
+
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
+                dialog.cancel();
             }
         });
 
         AlertDialog dialog = builder.create();
+        // setup to change color of the button
         dialog.show();
+
+        Button bn = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        bn.setTextColor(parseColor("#564d4d"));
+        Button bp = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        bp.setTextColor(parseColor("#9C2976"));
+
     }
 
     private void takePhotoBtn(){
