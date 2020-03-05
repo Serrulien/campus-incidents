@@ -13,7 +13,9 @@
     <string name="incident_category_text">Categories :</string>
     <string name="incident_date_text">Date du signalement :</string>
     <string name="incident_description_text">Description :</string>
-    <string name="mapbox_access_token">pk.eyJ1IjoieWFoaWF0ZW5lIiwiYSI6ImNrNXBqdXM4aTA5YXIzbm8zdGd4NDhhc2EifQ.3ODc_wacOF4R9Hn-fXgaDg</string>
+    <string name="mapbox_access_token">
+        pk.eyJ1IjoieWFoaWF0ZW5lIiwiYSI6ImNrNXBqdXM4aTA5YXIzbm8zdGd4NDhhc2EifQ.3ODc_wacOF4R9Hn-fXgaDg
+    </string>
     <string name="notifications">Notifications</string>
     <string name="incident_title">Titre de l\'incident</string>
     <string name="text_description">Description de l\'incident</string>
@@ -32,4 +34,5 @@
     <string name="title_hint">Titre</string>
     <string name="signaler_un_incident">Signaler un incident</string>
     <string name="incident_details_title">Détails de l\'incident</string>
+    <string name="incident_notifications">Notifications</string>
 </resources>

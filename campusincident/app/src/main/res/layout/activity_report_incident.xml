@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
         <ImageButton
                 android:id="@+id/button_back_new_incident"
                 android:layout_width="64dp"
@@ -31,7 +32,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/signaler_un_incident"
-                android:textSize="25sp">
+                android:textSize="25sp"
+                android:textStyle="bold">
         </TextView>
 
 

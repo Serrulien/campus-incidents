@@ -2,6 +2,8 @@ package fil.eservices.campusincident.presentation;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import fil.eservices.campusincident.R;
 
 public class NotificationActivity extends AppCompatActivity {
+
+    private ImageButton backButton;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notifications);
+        setContentView(R.layout.activity_notification);
         setupRecyclerView();
+        backButton();
     }
 
     private void setupRecyclerView(){
@@ -23,16 +29,16 @@ public class NotificationActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new RecyclerNotifAdapter());
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.notif_toolbar);
-        mToolbar.setTitle(getString(R.string.notifications));
-        mToolbar.setNavigationIcon(R.drawable.back_arrow);
+    }
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
+    private void backButton(){
+        backButton = findViewById(R.id.button_back_notifs_incident);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
     }
 }
