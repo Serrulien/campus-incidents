@@ -130,6 +130,25 @@ public class MapActivity extends AppCompatActivity implements
         this.renderMarkers(incidentList);
     }
 
+    private void fetchIncidentsAndRender() {
+        new LocationControllerApi().getAllLocationsUsingGET(
+                new Response.Listener<List<Location>>() {
+                    @Override
+                    public void onResponse(List<Location> response) {
+                        locationList = response;
+                        symbolManager.deleteAll();
+                        renderIncidents();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("API error", "API error", error.getCause());
+                    }
+                }
+        );
+    }
+
     /**
      * To display existant incidents on the map
      * @param incidents incidents
@@ -591,6 +610,7 @@ public class MapActivity extends AppCompatActivity implements
     public void onResume() {
         super.onResume();
         mapView.onResume();
+        fetchIncidentsAndRender();
     }
 
     @Override
@@ -598,6 +618,7 @@ public class MapActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         mapView.onStart();
+        fetchIncidentsAndRender();
     }
 
     @Override

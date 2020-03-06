@@ -16,13 +16,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fil.eservices.campusincident.R;
@@ -208,6 +212,21 @@ public class ReportActivity extends AppCompatActivity {
 
     private void preparePost() {
         // choper les valeurs et les mettre dans incidentDto
+        LatLng geoloc = getIntent().getParcelableExtra("geoloc");
+        incidentDto.setLongitude(geoloc.getLongitude());
+        incidentDto.setLatitude(geoloc.getLatitude());
+        incidentDto.setTitle(((TextView) findViewById(R.id.report_title)).getText().toString());
+        CharSequence desc = ((TextView) findViewById(R.id.report_description)).getText();
+        if(desc == null) {
+            incidentDto.setDescription("");
+        } else {
+            incidentDto.setDescription(desc.toString());
+        }
+        incidentDto.setAuthor("demo@me.com");
+        incidentDto.setCreatedAt(new Date());
+        incidentDto.setCategories(new ArrayList<>());
+        incidentDto.setLocation(6l);
+        Log.i("PPP", incidentDto.toString());
     }
 
     private void post() {
@@ -221,6 +240,7 @@ public class ReportActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(ReportActivity.this, "Erreur pendant l'envoi de l'incident", Toast.LENGTH_SHORT).show();
+                        Log.e("API ERROR", "API ERROR", error.getCause());
                     }
                 });
     }

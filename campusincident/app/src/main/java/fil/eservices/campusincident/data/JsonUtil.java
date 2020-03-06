@@ -19,10 +19,36 @@ import com.google.gson.reflect.TypeToken;
 import fil.eservices.campusincident.data.model.*;
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+
+class CustomDateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
+
+  private final DateFormat dateFormat;
+
+  public CustomDateAdapter() {
+    dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");      //This is the format I need
+    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
+
+  @Override
+  public synchronized Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    try {
+      return dateFormat.parse(json.getAsString());
+    } catch (ParseException e) {
+      throw new JsonParseException(e);
+    }
+  }
+
+  @Override
+  public synchronized JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+    return new JsonPrimitive(dateFormat.format(src));
+  }
+}
 
 public class JsonUtil {
   public static GsonBuilder gsonBuilder;
@@ -30,17 +56,8 @@ public class JsonUtil {
   static {
     gsonBuilder = new GsonBuilder();
     gsonBuilder.serializeNulls();
-    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-    gsonBuilder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-      public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        try {
-          return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.getAsString().replaceAll("Z$", "+0000"));
-        } catch (ParseException e) {
-          e.printStackTrace();
-        }
-        return null;
-      }
-    });
+    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    gsonBuilder.registerTypeAdapter(Date.class, new CustomDateAdapter());
   }
 
   public static Gson getGson() {
