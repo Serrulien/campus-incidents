@@ -19,7 +19,6 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Incident incident = (Incident) getIntent().getSerializableExtra("incident");
-        Log.i("PPP", incident.toString());
 
         setContentView(R.layout.activity_details);
 
