@@ -18,6 +18,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Finish activity when back button clicked
+     */
     private void backButton(){
         backButton = findViewById(R.id.button_back_details_incident);
         backButton.setOnClickListener(new View.OnClickListener() {

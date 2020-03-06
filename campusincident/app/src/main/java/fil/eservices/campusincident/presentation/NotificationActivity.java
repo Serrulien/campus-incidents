@@ -24,6 +24,9 @@ public class NotificationActivity extends AppCompatActivity {
         backButton();
     }
 
+    /**
+     * To setup the recycler view
+     */
     private void setupRecyclerView(){
         final RecyclerView rv = (RecyclerView) findViewById(R.id.notif_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -31,7 +34,9 @@ public class NotificationActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Finish activity when back button clicked
+     */
     private void backButton(){
         backButton = findViewById(R.id.button_back_notifs_incident);
         backButton.setOnClickListener(new View.OnClickListener() {

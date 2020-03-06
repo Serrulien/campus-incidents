@@ -38,6 +38,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
+import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolLongClickListener;
 import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
@@ -108,6 +109,7 @@ public class MapActivity extends AppCompatActivity implements
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
         mapboxMap.addOnMapLongClickListener(this);
+        Toast.makeText(this, "Long click sur la carte pour créer un marqueur", Toast.LENGTH_LONG).show();
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
@@ -120,9 +122,16 @@ public class MapActivity extends AppCompatActivity implements
         });
     }
 
+
+    /**
+     * Create marker on long click in a map
+     * @param point the point created in a map
+     * @return boolean true
+     */
     @Override
     public boolean onMapLongClick(@NonNull LatLng point) {
         // set non data driven properties
+        Toast.makeText(this, "Click sur le marqueur pour voir le détail", Toast.LENGTH_LONG).show();
 
         symbolManager.deleteAll();
         symbolManager.setIconAllowOverlap(true);
@@ -137,13 +146,6 @@ public class MapActivity extends AppCompatActivity implements
             }
         });
 
-
-//        symbolManager.addLongClickListener(symbol -> Toast.makeText(MapActivity.this,
-//                String.format("symbol long clicked %s", symbol.getId()),
-//                Toast.LENGTH_SHORT).show());
-
-        //symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
-
         // create a fixed symbol
         SymbolOptions symbolOptions = new SymbolOptions()
                 .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
@@ -157,7 +159,7 @@ public class MapActivity extends AppCompatActivity implements
 
     /**
      * Sets up all of the sources and layers needed
-     *
+     * @param loadedStyle style of the map
      */
     public void setUpData(@NonNull Style loadedStyle) {
         if (mapboxMap != null) {
@@ -171,6 +173,7 @@ public class MapActivity extends AppCompatActivity implements
 
     /**
      * Adds the GeoJSON source to the map
+     * @param loadedStyle style
      */
     private void setUpSource(@NonNull Style loadedStyle) {
         source = new GeoJsonSource(GEOJSON_SOURCE_ID, featureCollection);
@@ -179,6 +182,7 @@ public class MapActivity extends AppCompatActivity implements
 
     /**
      * Setup a layer with maki icons, eg. west coast city.
+     * @param loadedStyle style
      */
     private void setUpMarkerLayer(@NonNull Style loadedStyle) {
         loadedStyle.addLayer(new SymbolLayer(MARKER_LAYER_ID, GEOJSON_SOURCE_ID)
@@ -216,6 +220,9 @@ public class MapActivity extends AppCompatActivity implements
         });
     }
 
+    /**
+     * To add default user locations in search mode
+     */
     private void addUserLocations() {
         campusPB = CarmenFeature.builder().text("Université de Lille Campus Pont de Bois")
                 .geometry(Point.fromLngLat(3.126149,50.629212))
@@ -232,6 +239,12 @@ public class MapActivity extends AppCompatActivity implements
                 .build();
     }
 
+    /**
+     * Display the search result in the map
+     * @param requestCode requestCode
+     * @param resultCode resultCode
+     * @param data data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -264,6 +277,9 @@ public class MapActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * To set default locations in campus spinner
+     */
     private void setDefaultLocations(){
         final LatLng citeScientifique = new LatLng(50.609621, 3.136460);
         final LatLng pontDeBois = new LatLng(50.628211, 3.126170);
@@ -316,6 +332,10 @@ public class MapActivity extends AppCompatActivity implements
         });
     }
 
+    /**
+     * To enable current location component
+     * @param loadedMapStyle style
+     */
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         // Check if permissions are enabled and if not request
@@ -375,6 +395,9 @@ public class MapActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Get current user location on click on location component
+     */
     @SuppressLint("StringFormatInvalid")
     @SuppressWarnings( {"MissingPermission"})
     @Override
