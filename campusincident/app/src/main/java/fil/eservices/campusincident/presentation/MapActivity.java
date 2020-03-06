@@ -88,7 +88,7 @@ public class MapActivity extends AppCompatActivity implements
     private PermissionsManager permissionsManager;
     private FeatureCollection featureCollection;
 
-    private LatLng newIncidentPoint;
+    private LatLng newIncidentPoint = null;
 
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private CarmenFeature campusPB;
