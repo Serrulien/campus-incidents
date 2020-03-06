@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_details_incident"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.DetailsActivity">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+        <ImageButton
+                android:id="@+id/button_back_details_incident"
+                android:layout_width="64dp"
+                android:layout_height="30dp"
+                android:background="#00FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/back_arrow_dark"
+                tools:ignore="VectorDrawableCompat"/>
+        <TextView
+                android:id="@+id/name_trip_details_incident"
+                android:layout_marginEnd="64dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/incident_details_title"
+                android:textSize="25sp"
+                android:textStyle="bold">
+        </TextView>
+
+
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/LinearLayout_progress_bar_details_incident"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+    >
+        <ProgressBar
+                android:id="@+id/progress_bar_details_incident"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+        />
+    </LinearLayout>
+    <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        <LinearLayout
+                android:id="@+id/LinearLayout_new_incident"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                tools:context=".presentation.DetailsActivity">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    tools:context=".presentation.ReportActivity">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/shapeableImageView"
+                        android:layout_width="350dp"
+                        android:layout_height="250dp"
+                        android:src="@mipmap/cristal"
+                        android:layout_gravity="center">
+
+                </com.google.android.material.imageview.ShapeableImageView>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                    android:id="@+id/incident_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:id="@+id/incident_date_text"
+                    android:layout_width="363dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/incident_date_text"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"/>
+
+            <TextView
+                    android:id="@+id/incident_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"/>
+
+
+            <TextView
+                    android:id="@+id/incident_category_text"
+                    android:layout_width="363dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="@string/incident_category_text"
+                    android:layout_marginStart="10dp"/>
+
+
+            <TextView
+                    android:id="@+id/incident_category"
+                    android:layout_width="363dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_marginStart="10dp"/>
+
+
+            <TextView
+                    android:id="@+id/nombre_evaluation_text"
+                    android:layout_width="363dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="@string/nombre_evaluation_text"
+                    android:layout_marginStart="10dp"/>
+
+            <TextView
+                    android:id="@+id/nombre_evaluation"
+                    android:layout_width="141dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginStart="10dp"/>
+
+
+            <TextView
+                    android:id="@+id/incident_description_text"
+                    android:layout_width="363dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@string/incident_description_text"
+                    android:layout_marginStart="10dp"/>
+
+            <TextView
+                    android:id="@+id/incident_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="20sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

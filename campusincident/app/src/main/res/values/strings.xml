@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Campus Incident</string>
+    <string name="welcome_back">Bienvenue</string>
+    <string name="signal_it_together">Signalons ensemble</string>
+    <string name="skip">Passer</string>
+    <string name="login">Se connecter</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="forget_password">Mot de passe oublié ?</string>
+    <string name="photo_description">Une photo de l\'incident</string>
+    <string name="nombre_evaluation_text">Nombre de personnes souhaitant la résolution :</string>
+    <string name="incident_category_text">Categories :</string>
+    <string name="incident_date_text">Date du signalement :</string>
+    <string name="incident_description_text">Description :</string>
+    <string name="mapbox_access_token">
+        pk.eyJ1IjoieWFoaWF0ZW5lIiwiYSI6ImNrNXBqdXM4aTA5YXIzbm8zdGd4NDhhc2EifQ.3ODc_wacOF4R9Hn-fXgaDg
+    </string>
+    <string name="notifications">Notifications</string>
+    <string name="incident_title">Titre de l\'incident</string>
+    <string name="text_description">Description de l\'incident</string>
+    <string name="text_categories">Catégories :</string>
+    <string name="cat_parking">Parking</string>
+    <string name="cat_panneau">Panneaux d\'indications</string>
+    <string name="cat_espace">Espaces verts</string>
+    <string name="cat_proprete">Propreté du campus</string>
+    <string name="send_report">ENVOYER</string>
+    <string name="current_location">Current location</string>
+    <string name="add_incident_title_activity">Ajouter un incident</string>
+    <string name="create_incident">Créer</string>
+    <string name="other_cat">Autres</string>
+    <string name="take_photo">Prendre une photo</string>
+    <string name="description_hint">Description</string>
+    <string name="title_hint">Titre</string>
+    <string name="signaler_un_incident">Signaler un incident</string>
+    <string name="incident_details_title">Détails de l\'incident</string>
+    <string name="incident_notifications">Notifications</string>
+    <string name="create">Créer</string>
+    <string name="cancel">Annuler</string>
+    <string name="dialog_message">Voulez-vous continuer ?</string>
+    <string name="dialog_title">Confirmation</string>
+</resources>
