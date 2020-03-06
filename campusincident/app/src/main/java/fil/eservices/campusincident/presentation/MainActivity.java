@@ -3,6 +3,7 @@ package fil.eservices.campusincident.presentation;
 import android.animation.Animator;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.Window;
@@ -15,7 +16,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import java.util.List;
+
 import fil.eservices.campusincident.R;
+import fil.eservices.campusincident.data.api.LocationControllerApi;
+import fil.eservices.campusincident.data.model.Location;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;

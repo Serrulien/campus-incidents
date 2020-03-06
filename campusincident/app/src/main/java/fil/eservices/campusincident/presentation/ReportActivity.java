@@ -48,6 +48,9 @@ public class ReportActivity extends AppCompatActivity {
         setBtnCreate();
     }
 
+    /**
+     * Finish activity when back button clicked
+     */
     private void backButton(){
         backButton = findViewById(R.id.button_back_new_incident);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +61,9 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * To set on click on creation incident
+     */
     private void setBtnCreate(){
         btnCreate = findViewById(R.id.btn_create_incident);
         btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +74,9 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * To create a dialog box
+     */
     private void setDialogBox(){
         // 2. Chain together various setter methods to set the dialog characteristics
         builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
@@ -98,6 +107,9 @@ public class ReportActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * To set the take photo button
+     */
     private void takePhotoBtn(){
         imageView = findViewById(R.id.shapeableImageView);
         mCaptureBtn = findViewById(R.id.btnCaptureImage);
@@ -116,6 +128,9 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * To open camera component
+     */
     private void openCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
@@ -126,6 +141,12 @@ public class ReportActivity extends AppCompatActivity {
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
     }
 
+    /**
+     * Permissions of camera component result
+     * @param requestCode requestCode
+     * @param permissions permissions
+     * @param grantResults grantResults
+     */
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case PERMISSION_CODE:{
@@ -138,6 +159,12 @@ public class ReportActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * To set image in image view after taking photo
+     * @param requestCode requestCode
+     * @param resultCode resultCode
+     * @param data data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

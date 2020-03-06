@@ -26,7 +26,7 @@
                 app:srcCompat="@drawable/back_arrow_dark"
                 tools:ignore="VectorDrawableCompat"/>
         <TextView
-                android:id="@+id/name_trip_details_incident"
+                android:id="@+id/name_details_incident"
                 android:layout_marginEnd="64dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,14 +89,14 @@
 
 
             <TextView
-                    android:id="@+id/incident_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="58dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
+                android:id="@+id/incident_name"
+                android:layout_width="wrap_content"
+                android:layout_height="58dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                     android:id="@+id/incident_date_text"
@@ -106,16 +106,16 @@
                     android:text="@string/incident_date_text"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginLeft="10dp"/>
 
             <TextView
                     android:id="@+id/incident_date"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginLeft="10dp"/>
 
 
             <TextView
@@ -126,7 +126,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:text="@string/incident_category_text"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginLeft="10dp"/>
 
 
             <TextView
@@ -136,7 +136,7 @@
                     android:layout_marginTop="16dp"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginLeft="10dp"/>
 
 
             <TextView
@@ -147,7 +147,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:text="@string/nombre_evaluation_text"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginLeft="10dp"/>
 
             <TextView
                     android:id="@+id/nombre_evaluation"
@@ -156,7 +156,8 @@
                     android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     android:textSize="18sp"
-                    android:layout_marginStart="10dp"/>
+                    android:text="0"
+                    android:layout_marginLeft="10dp"/>
 
 
             <TextView
@@ -167,13 +168,13 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:text="@string/incident_description_text"
-                    android:layout_marginStart="10dp"/>
+                    android:layout_marginLeft="10dp"/>
 
             <TextView
                     android:id="@+id/incident_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:textSize="20sp"/>
 
