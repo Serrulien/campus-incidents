@@ -20,7 +20,7 @@ import java.util.Map;
 
 @ApiModel(description = "")
 public class ModelAndView {
-  
+
   @SerializedName("empty")
   private Boolean empty = null;
   @SerializedName("model")
@@ -30,7 +30,7 @@ public class ModelAndView {
   @SerializedName("reference")
   private Boolean reference = null;
   public enum StatusEnum {
-     CONTINUE,  SWITCHING_PROTOCOLS,  PROCESSING,  CHECKPOINT,  OK,  CREATED,  ACCEPTED,  NON_AUTHORITATIVE_INFORMATION,  NO_CONTENT,  RESET_CONTENT,  PARTIAL_CONTENT,  MULTI_STATUS,  ALREADY_REPORTED,  IM_USED,  MULTIPLE_CHOICES,  MOVED_PERMANENTLY,  FOUND,  MOVED_TEMPORARILY,  SEE_OTHER,  NOT_MODIFIED,  USE_PROXY,  TEMPORARY_REDIRECT,  PERMANENT_REDIRECT,  BAD_REQUEST,  UNAUTHORIZED,  PAYMENT_REQUIRED,  FORBIDDEN,  NOT_FOUND,  METHOD_NOT_ALLOWED,  NOT_ACCEPTABLE,  PROXY_AUTHENTICATION_REQUIRED,  REQUEST_TIMEOUT,  CONFLICT,  GONE,  LENGTH_REQUIRED,  PRECONDITION_FAILED,  PAYLOAD_TOO_LARGE,  REQUEST_ENTITY_TOO_LARGE,  URI_TOO_LONG,  REQUEST_URI_TOO_LONG,  UNSUPPORTED_MEDIA_TYPE,  REQUESTED_RANGE_NOT_SATISFIABLE,  EXPECTATION_FAILED,  I_AM_A_TEAPOT,  INSUFFICIENT_SPACE_ON_RESOURCE,  METHOD_FAILURE,  DESTINATION_LOCKED,  UNPROCESSABLE_ENTITY,  LOCKED,  FAILED_DEPENDENCY,  TOO_EARLY,  UPGRADE_REQUIRED,  PRECONDITION_REQUIRED,  TOO_MANY_REQUESTS,  REQUEST_HEADER_FIELDS_TOO_LARGE,  UNAVAILABLE_FOR_LEGAL_REASONS,  INTERNAL_SERVER_ERROR,  NOT_IMPLEMENTED,  BAD_GATEWAY,  SERVICE_UNAVAILABLE,  GATEWAY_TIMEOUT,  HTTP_VERSION_NOT_SUPPORTED,  VARIANT_ALSO_NEGOTIATES,  INSUFFICIENT_STORAGE,  LOOP_DETECTED,  BANDWIDTH_LIMIT_EXCEEDED,  NOT_EXTENDED,  NETWORK_AUTHENTICATION_REQUIRED, 
+    CONTINUE,  SWITCHING_PROTOCOLS,  PROCESSING,  CHECKPOINT,  OK,  CREATED,  ACCEPTED,  NON_AUTHORITATIVE_INFORMATION,  NO_CONTENT,  RESET_CONTENT,  PARTIAL_CONTENT,  MULTI_STATUS,  ALREADY_REPORTED,  IM_USED,  MULTIPLE_CHOICES,  MOVED_PERMANENTLY,  FOUND,  MOVED_TEMPORARILY,  SEE_OTHER,  NOT_MODIFIED,  USE_PROXY,  TEMPORARY_REDIRECT,  PERMANENT_REDIRECT,  BAD_REQUEST,  UNAUTHORIZED,  PAYMENT_REQUIRED,  FORBIDDEN,  NOT_FOUND,  METHOD_NOT_ALLOWED,  NOT_ACCEPTABLE,  PROXY_AUTHENTICATION_REQUIRED,  REQUEST_TIMEOUT,  CONFLICT,  GONE,  LENGTH_REQUIRED,  PRECONDITION_FAILED,  PAYLOAD_TOO_LARGE,  REQUEST_ENTITY_TOO_LARGE,  URI_TOO_LONG,  REQUEST_URI_TOO_LONG,  UNSUPPORTED_MEDIA_TYPE,  REQUESTED_RANGE_NOT_SATISFIABLE,  EXPECTATION_FAILED,  I_AM_A_TEAPOT,  INSUFFICIENT_SPACE_ON_RESOURCE,  METHOD_FAILURE,  DESTINATION_LOCKED,  UNPROCESSABLE_ENTITY,  LOCKED,  FAILED_DEPENDENCY,  TOO_EARLY,  UPGRADE_REQUIRED,  PRECONDITION_REQUIRED,  TOO_MANY_REQUESTS,  REQUEST_HEADER_FIELDS_TOO_LARGE,  UNAVAILABLE_FOR_LEGAL_REASONS,  INTERNAL_SERVER_ERROR,  NOT_IMPLEMENTED,  BAD_GATEWAY,  SERVICE_UNAVAILABLE,  GATEWAY_TIMEOUT,  HTTP_VERSION_NOT_SUPPORTED,  VARIANT_ALSO_NEGOTIATES,  INSUFFICIENT_STORAGE,  LOOP_DETECTED,  BANDWIDTH_LIMIT_EXCEEDED,  NOT_EXTENDED,  NETWORK_AUTHENTICATION_REQUIRED,
   };
   @SerializedName("status")
   private StatusEnum status = null;
@@ -120,12 +120,12 @@ public class ModelAndView {
     }
     ModelAndView modelAndView = (ModelAndView) o;
     return (this.empty == null ? modelAndView.empty == null : this.empty.equals(modelAndView.empty)) &&
-        (this.model == null ? modelAndView.model == null : this.model.equals(modelAndView.model)) &&
-        (this.modelMap == null ? modelAndView.modelMap == null : this.modelMap.equals(modelAndView.modelMap)) &&
-        (this.reference == null ? modelAndView.reference == null : this.reference.equals(modelAndView.reference)) &&
-        (this.status == null ? modelAndView.status == null : this.status.equals(modelAndView.status)) &&
-        (this.view == null ? modelAndView.view == null : this.view.equals(modelAndView.view)) &&
-        (this.viewName == null ? modelAndView.viewName == null : this.viewName.equals(modelAndView.viewName));
+            (this.model == null ? modelAndView.model == null : this.model.equals(modelAndView.model)) &&
+            (this.modelMap == null ? modelAndView.modelMap == null : this.modelMap.equals(modelAndView.modelMap)) &&
+            (this.reference == null ? modelAndView.reference == null : this.reference.equals(modelAndView.reference)) &&
+            (this.status == null ? modelAndView.status == null : this.status.equals(modelAndView.status)) &&
+            (this.view == null ? modelAndView.view == null : this.view.equals(modelAndView.view)) &&
+            (this.viewName == null ? modelAndView.viewName == null : this.viewName.equals(modelAndView.viewName));
   }
 
   @Override
@@ -145,7 +145,7 @@ public class ModelAndView {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class ModelAndView {\n");
-    
+
     sb.append("  empty: ").append(empty).append("\n");
     sb.append("  model: ").append(model).append("\n");
     sb.append("  modelMap: ").append(modelMap).append("\n");

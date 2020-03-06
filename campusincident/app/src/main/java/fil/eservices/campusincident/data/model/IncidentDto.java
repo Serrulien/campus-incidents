@@ -17,12 +17,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(description = "")
 public class IncidentDto {
-  
+
   @SerializedName("author")
   private String author = null;
+  @SerializedName("categories")
+  private List<String> categories = null;
   @SerializedName("createdAt")
   private Date createdAt = null;
   @SerializedName("description")
@@ -47,6 +50,16 @@ public class IncidentDto {
   }
   public void setAuthor(String author) {
     this.author = author;
+  }
+
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  public List<String> getCategories() {
+    return categories;
+  }
+  public void setCategories(List<String> categories) {
+    this.categories = categories;
   }
 
   /**
@@ -130,19 +143,21 @@ public class IncidentDto {
     }
     IncidentDto incidentDto = (IncidentDto) o;
     return (this.author == null ? incidentDto.author == null : this.author.equals(incidentDto.author)) &&
-        (this.createdAt == null ? incidentDto.createdAt == null : this.createdAt.equals(incidentDto.createdAt)) &&
-        (this.description == null ? incidentDto.description == null : this.description.equals(incidentDto.description)) &&
-        (this.latitude == null ? incidentDto.latitude == null : this.latitude.equals(incidentDto.latitude)) &&
-        (this.location == null ? incidentDto.location == null : this.location.equals(incidentDto.location)) &&
-        (this.longitude == null ? incidentDto.longitude == null : this.longitude.equals(incidentDto.longitude)) &&
-        (this.status == null ? incidentDto.status == null : this.status.equals(incidentDto.status)) &&
-        (this.title == null ? incidentDto.title == null : this.title.equals(incidentDto.title));
+            (this.categories == null ? incidentDto.categories == null : this.categories.equals(incidentDto.categories)) &&
+            (this.createdAt == null ? incidentDto.createdAt == null : this.createdAt.equals(incidentDto.createdAt)) &&
+            (this.description == null ? incidentDto.description == null : this.description.equals(incidentDto.description)) &&
+            (this.latitude == null ? incidentDto.latitude == null : this.latitude.equals(incidentDto.latitude)) &&
+            (this.location == null ? incidentDto.location == null : this.location.equals(incidentDto.location)) &&
+            (this.longitude == null ? incidentDto.longitude == null : this.longitude.equals(incidentDto.longitude)) &&
+            (this.status == null ? incidentDto.status == null : this.status.equals(incidentDto.status)) &&
+            (this.title == null ? incidentDto.title == null : this.title.equals(incidentDto.title));
   }
 
   @Override
   public int hashCode() {
     int result = 17;
     result = 31 * result + (this.author == null ? 0: this.author.hashCode());
+    result = 31 * result + (this.categories == null ? 0: this.categories.hashCode());
     result = 31 * result + (this.createdAt == null ? 0: this.createdAt.hashCode());
     result = 31 * result + (this.description == null ? 0: this.description.hashCode());
     result = 31 * result + (this.latitude == null ? 0: this.latitude.hashCode());
@@ -157,8 +172,9 @@ public class IncidentDto {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class IncidentDto {\n");
-    
+
     sb.append("  author: ").append(author).append("\n");
+    sb.append("  categories: ").append(categories).append("\n");
     sb.append("  createdAt: ").append(createdAt).append("\n");
     sb.append("  description: ").append(description).append("\n");
     sb.append("  latitude: ").append(latitude).append("\n");
