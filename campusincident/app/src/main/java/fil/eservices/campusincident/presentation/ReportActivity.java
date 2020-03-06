@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,7 +19,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import java.util.List;
+
 import fil.eservices.campusincident.R;
+import fil.eservices.campusincident.data.api.CategoryControllerApi;
+import fil.eservices.campusincident.data.api.IncidentControllerApi;
+import fil.eservices.campusincident.data.model.Category;
+import fil.eservices.campusincident.data.model.Incident;
+import fil.eservices.campusincident.data.model.IncidentDto;
 
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
@@ -27,6 +39,9 @@ import static android.graphics.Color.parseColor;
 
 
 public class ReportActivity extends AppCompatActivity {
+
+    private List<Category> categories;
+    private IncidentDto incidentDto = new IncidentDto();
 
     private ImageView imageView;
     private Button mCaptureBtn;
@@ -42,6 +57,22 @@ public class ReportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_incident);
+
+        new CategoryControllerApi().getAllCategoriesUsingGET(null,
+                new Response.Listener<List<Category>>() {
+                    @Override
+                    public void onResponse(List<Category> response) {
+                        categories = response;
+                        Log.i("PPP", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
         takePhotoBtn();
         backButton();
         builder = new AlertDialog.Builder(this);
@@ -86,6 +117,8 @@ public class ReportActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
+                preparePost();
+                post();
                 finish();
             }
         });
@@ -171,6 +204,25 @@ public class ReportActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             imageView.setImageURI(imageUri);
         }
+    }
+
+    private void preparePost() {
+        // choper les valeurs et les mettre dans incidentDto
+    }
+
+    private void post() {
+        new IncidentControllerApi().newIncidentUsingPOST(incidentDto,
+                new Response.Listener<Incident>() {
+                    @Override
+                    public void onResponse(Incident response) {
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ReportActivity.this, "Erreur pendant l'envoi de l'incident", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }

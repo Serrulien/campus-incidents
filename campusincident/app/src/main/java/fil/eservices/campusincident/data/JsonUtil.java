@@ -61,61 +61,77 @@ public class JsonUtil {
 
   public static Type getListTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
-    
+
+    if ("Category".equalsIgnoreCase(className)) {
+      return new TypeToken<List<Category>>(){}.getType();
+    }
+
+    if ("CategoryRenameDto".equalsIgnoreCase(className)) {
+      return new TypeToken<List<CategoryRenameDto>>(){}.getType();
+    }
+
     if ("Geolocation".equalsIgnoreCase(className)) {
       return new TypeToken<List<Geolocation>>(){}.getType();
     }
-    
+
     if ("Incident".equalsIgnoreCase(className)) {
       return new TypeToken<List<Incident>>(){}.getType();
     }
-    
+
     if ("IncidentDto".equalsIgnoreCase(className)) {
       return new TypeToken<List<IncidentDto>>(){}.getType();
     }
-    
+
     if ("Location".equalsIgnoreCase(className)) {
       return new TypeToken<List<Location>>(){}.getType();
     }
-    
+
     if ("ModelAndView".equalsIgnoreCase(className)) {
       return new TypeToken<List<ModelAndView>>(){}.getType();
     }
-    
+
     if ("View".equalsIgnoreCase(className)) {
       return new TypeToken<List<View>>(){}.getType();
     }
-    
+
     return new TypeToken<List<Object>>(){}.getType();
   }
 
   public static Type getTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
-    
+
+    if ("Category".equalsIgnoreCase(className)) {
+      return new TypeToken<Category>(){}.getType();
+    }
+
+    if ("CategoryRenameDto".equalsIgnoreCase(className)) {
+      return new TypeToken<CategoryRenameDto>(){}.getType();
+    }
+
     if ("Geolocation".equalsIgnoreCase(className)) {
       return new TypeToken<Geolocation>(){}.getType();
     }
-    
+
     if ("Incident".equalsIgnoreCase(className)) {
       return new TypeToken<Incident>(){}.getType();
     }
-    
+
     if ("IncidentDto".equalsIgnoreCase(className)) {
       return new TypeToken<IncidentDto>(){}.getType();
     }
-    
+
     if ("Location".equalsIgnoreCase(className)) {
       return new TypeToken<Location>(){}.getType();
     }
-    
+
     if ("ModelAndView".equalsIgnoreCase(className)) {
       return new TypeToken<ModelAndView>(){}.getType();
     }
-    
+
     if ("View".equalsIgnoreCase(className)) {
       return new TypeToken<View>(){}.getType();
     }
-    
+
     return new TypeToken<Object>(){}.getType();
   }
 

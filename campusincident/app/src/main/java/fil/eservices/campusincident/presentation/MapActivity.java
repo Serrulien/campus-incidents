@@ -88,6 +88,7 @@ public class MapActivity extends AppCompatActivity implements
     private PermissionsManager permissionsManager;
     private FeatureCollection featureCollection;
 
+    private LatLng newIncidentPoint;
 
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private CarmenFeature campusPB;
@@ -237,6 +238,8 @@ public class MapActivity extends AppCompatActivity implements
     public boolean onMapLongClick(@NonNull LatLng point) {
         // set non data driven properties
         Toast.makeText(this, "Click sur le marqueur pour voir le détail", Toast.LENGTH_LONG).show();
+
+        newIncidentPoint = point;
 
         newIncidentSymbolManager.deleteAll();
         newIncidentSymbolManager.setIconAllowOverlap(true);
@@ -629,7 +632,12 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     public void onButtonClick(View view) {
+        if(newIncidentPoint == null) {
+            Toast.makeText(this, "Veuillez d'abord ajouter le marqueur sur la carte", Toast.LENGTH_LONG).show();
+            return;
+        }
         Intent myIntent = new Intent(getBaseContext(),   ReportActivity.class);
+        myIntent.putExtra("geoloc", newIncidentPoint);
         startActivity(myIntent);
     }
 

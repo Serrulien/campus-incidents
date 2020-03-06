@@ -60,14 +60,9 @@ public class CategoryControllerApi {
    */
   public List<Category> getAllCategoriesUsingGET (String containing) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
-    // verify the required parameter 'containing' is set
-    if (containing == null) {
-      VolleyError error = new VolleyError("Missing the required parameter 'containing' when calling getAllCategoriesUsingGET",
-              new ApiException(400, "Missing the required parameter 'containing' when calling getAllCategoriesUsingGET"));
-    }
 
     // create path and map variables
-    String path = "/categories";
+    String path = "/campusincident/categories";
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -123,14 +118,9 @@ public class CategoryControllerApi {
   public void getAllCategoriesUsingGET (String containing, final Response.Listener<List<Category>> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
-    // verify the required parameter 'containing' is set
-    if (containing == null) {
-      VolleyError error = new VolleyError("Missing the required parameter 'containing' when calling getAllCategoriesUsingGET",
-              new ApiException(400, "Missing the required parameter 'containing' when calling getAllCategoriesUsingGET"));
-    }
 
     // create path and map variables
-    String path = "/categories".replaceAll("\\{format\\}","json");
+    String path = "/campusincident/categories".replaceAll("\\{format\\}","json");
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -196,7 +186,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/categories";
+    String path = "/campusincident/categories";
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -259,7 +249,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/categories".replaceAll("\\{format\\}","json");
+    String path = "/campusincident/categories".replaceAll("\\{format\\}","json");
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -324,7 +314,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/categories/rename";
+    String path = "/campusincident/categories/rename";
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -387,7 +377,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/categories/rename".replaceAll("\\{format\\}","json");
+    String path = "/campusincident/categories/rename".replaceAll("\\{format\\}","json");
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
