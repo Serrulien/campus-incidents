@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 public class LocationControllerApi {
-  String basePath = "https://54.38.242.184:8080";
+  String basePath = "http://54.38.242.184:8080";
   ApiInvoker apiInvoker = ApiInvoker.getInstance();
 
   public void addHeader(String key, String value) {

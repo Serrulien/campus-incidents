@@ -16,10 +16,11 @@ import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @ApiModel(description = "")
-public class Incident {
+public class Incident implements Serializable {
   
   @SerializedName("author")
   private String author = null;

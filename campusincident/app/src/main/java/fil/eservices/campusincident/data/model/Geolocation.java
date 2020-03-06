@@ -15,8 +15,10 @@ package fil.eservices.campusincident.data.model;
 import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @ApiModel(description = "")
-public class Geolocation {
+public class Geolocation implements Serializable {
   
   @SerializedName("id")
   private Long id = null;

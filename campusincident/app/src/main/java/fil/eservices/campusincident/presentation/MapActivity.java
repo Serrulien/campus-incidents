@@ -18,6 +18,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.gson.JsonObject;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -46,9 +49,15 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import fil.eservices.campusincident.R;
+import fil.eservices.campusincident.data.api.IncidentControllerApi;
+import fil.eservices.campusincident.data.api.LocationControllerApi;
+import fil.eservices.campusincident.data.model.Geolocation;
+import fil.eservices.campusincident.data.model.Incident;
+import fil.eservices.campusincident.data.model.Location;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.*;
 
@@ -58,6 +67,8 @@ public class MapActivity extends AppCompatActivity implements
     private static final String GEOJSON_SOURCE_ID = "GEOJSON_SOURCE_ID";
     private static final String MARKER_IMAGE_ID = "MARKER_IMAGE_ID";
     private static final String MARKER_LAYER_ID = "MARKER_LAYER_ID";
+
+    private List<Location> locationList = new ArrayList<Location>();
 
     private static String CAMPUS_CITE = "Campus Cité Scientifque";
     private static String CAMPUS_PBOIS = "Campus Pont De Bois";
@@ -79,9 +90,81 @@ public class MapActivity extends AppCompatActivity implements
     private CarmenFeature campusSC;
     private GeoJsonSource source;
 
+    private List<Incident> incidentList;
+
+    private void renderIncidents() {
+        this.renderMarkers(incidentList);
+    }
+
+    private void renderMarkers(List<Incident> incidents) {
+        symbolManager.setIconAllowOverlap(true);
+        symbolManager.setTextAllowOverlap(true);
+
+        for (Incident incident: incidents) {
+            // Add click listener to open details activity
+            symbolManager.addClickListener(new OnSymbolClickListener() {
+                @Override
+                public void onAnnotationClick(Symbol symbol) {
+                    Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
+                    myIntent.putExtra("incident", incident);
+                    startActivity(myIntent);
+                }
+            });
+
+            Geolocation point = incident.getGeolocation();
+
+            // create a fixed symbol
+            SymbolOptions symbolOptions = new SymbolOptions()
+                    .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
+                    .withIconImage(MARKER_IMAGE_ID)
+                    .withIconSize(0.5f)
+                    .withDraggable(false);
+
+            symbolManager.create(symbolOptions);
+        }
+    }
+
+    private void fetchLocations() {
+        new LocationControllerApi().getAllLocationsUsingGET(
+                new Response.Listener<List<Location>>() {
+                    @Override
+                    public void onResponse(List<Location> response) {
+                        locationList = response;
+                        setDefaultLocations();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("API error", "API error", error.getCause());
+                    }
+                }
+        );
+    }
+
+    private void fetchIncidents() {
+        new IncidentControllerApi().getAllIncidentsUsingGET(
+                new Response.Listener<List<Incident>>() {
+                    @Override
+                    public void onResponse(List<Incident> response) {
+                        incidentList = response;
+                    }
+                }
+                , new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("API ERROR", "API ERROR", error.getCause());
+                    }
+                });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.fetchLocations();
+        this.fetchIncidents();
+
         String MAP_TOKEN = getString(R.string.mapbox_access_token);
 
         /**
@@ -98,7 +181,6 @@ public class MapActivity extends AppCompatActivity implements
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync((OnMapReadyCallback) this);
-        setDefaultLocations();
     }
 
     /**
@@ -116,42 +198,43 @@ public class MapActivity extends AppCompatActivity implements
                 enableLocationComponent(style);
                 initSearchFab();
                 addUserLocations();
+                renderIncidents();
             }
         });
     }
 
     @Override
     public boolean onMapLongClick(@NonNull LatLng point) {
-        // set non data driven properties
-
-        symbolManager.deleteAll();
-        symbolManager.setIconAllowOverlap(true);
-        symbolManager.setTextAllowOverlap(true);
-
-        // Add click listener to open details activity
-        symbolManager.addClickListener(new OnSymbolClickListener() {
-            @Override
-            public void onAnnotationClick(Symbol symbol) {
-                Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
-                startActivity(myIntent);
-            }
-        });
-
-
-//        symbolManager.addLongClickListener(symbol -> Toast.makeText(MapActivity.this,
-//                String.format("symbol long clicked %s", symbol.getId()),
-//                Toast.LENGTH_SHORT).show());
-
-        //symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
-
-        // create a fixed symbol
-        SymbolOptions symbolOptions = new SymbolOptions()
-                .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
-                .withIconImage(MARKER_IMAGE_ID)
-                .withIconSize(0.5f)
-                .withDraggable(true);
-
-        symbolManager.create(symbolOptions);
+//        // set non data driven properties
+//
+//        symbolManager.deleteAll();
+//        symbolManager.setIconAllowOverlap(true);
+//        symbolManager.setTextAllowOverlap(true);
+//
+//        // Add click listener to open details activity
+//        symbolManager.addClickListener(new OnSymbolClickListener() {
+//            @Override
+//            public void onAnnotationClick(Symbol symbol) {
+//                Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
+//                startActivity(myIntent);
+//            }
+//        });
+//
+//
+////        symbolManager.addLongClickListener(symbol -> Toast.makeText(MapActivity.this,
+////                String.format("symbol long clicked %s", symbol.getId()),
+////                Toast.LENGTH_SHORT).show());
+//
+//        //symbolManager.addLongClickListener(symbol ->  symbolManager.delete(symbol));
+//
+//        // create a fixed symbol
+//        SymbolOptions symbolOptions = new SymbolOptions()
+//                .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
+//                .withIconImage(MARKER_IMAGE_ID)
+//                .withIconSize(0.5f)
+//                .withDraggable(true);
+//
+//        symbolManager.create(symbolOptions);
         return true;
     }
 
@@ -270,9 +353,9 @@ public class MapActivity extends AppCompatActivity implements
         final LatLng moulins = new LatLng(50.619456, 3.068495);
 
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(CAMPUS_CITE);
-        arrayList.add(CAMPUS_PBOIS);
-        arrayList.add(CAMPUS_MOULINS);
+        for (Location loc: locationList) {
+            arrayList.add(loc.getName());
+        }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -280,14 +363,9 @@ public class MapActivity extends AppCompatActivity implements
         spinnerCampus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String campusName = parent.getItemAtPosition(position).toString();
-                if (campusName.equals(CAMPUS_CITE)){
-                    mapPositionCampus(citeScientifique);
-                }else if(campusName.equals(CAMPUS_PBOIS)){
-                    mapPositionCampus(pontDeBois);
-                }else {
-                    mapPositionCampus(moulins);
-                }
+                Location selectedLocation = locationList.get(position);
+                LatLng geoloc = new LatLng(selectedLocation.getCenter().getLatitude(), selectedLocation.getCenter().getLongitude());
+                mapPositionCampus(geoloc);
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {

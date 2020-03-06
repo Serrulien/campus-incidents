@@ -12,11 +12,15 @@
 
 package fil.eservices.campusincident.data;
 
+import android.util.Log;
+
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import fil.eservices.campusincident.data.model.*;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +30,15 @@ public class JsonUtil {
   static {
     gsonBuilder = new GsonBuilder();
     gsonBuilder.serializeNulls();
-    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     gsonBuilder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
       public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return new Date(json.getAsJsonPrimitive().getAsLong());
+        try {
+          return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.getAsString().replaceAll("Z$", "+0000"));
+        } catch (ParseException e) {
+          e.printStackTrace();
+        }
+        return null;
       }
     });
   }
