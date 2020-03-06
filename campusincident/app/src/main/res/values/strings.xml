@@ -28,7 +28,7 @@
     <string name="current_location">Current location</string>
     <string name="add_incident_title_activity">Ajouter un incident</string>
     <string name="create_incident">Créer</string>
-    <string name="other_cat">Autres</string>
+    <string name="other_cat">Autres catégories</string>
     <string name="take_photo">Prendre une photo</string>
     <string name="description_hint">Description</string>
     <string name="title_hint">Titre</string>

@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,14 +30,17 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import fil.eservices.campusincident.R;
 import fil.eservices.campusincident.data.api.CategoryControllerApi;
 import fil.eservices.campusincident.data.api.IncidentControllerApi;
+import fil.eservices.campusincident.data.api.LocationControllerApi;
 import fil.eservices.campusincident.data.model.Category;
 import fil.eservices.campusincident.data.model.Incident;
 import fil.eservices.campusincident.data.model.IncidentDto;
+import fil.eservices.campusincident.data.model.Location;
 
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
@@ -55,32 +61,66 @@ public class ReportActivity extends AppCompatActivity {
     private int IMAGE_CAPTURE_CODE = 1001;
     private ImageButton backButton;
     private Button btnCreate;
+    private Spinner spinnerCategory;
+    private List<Category> listCategories;
+    private List<String> categorySelected = new ArrayList<>();
     AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_incident);
+        spinnerCategory = findViewById(R.id.categories_spinner);
+        getCategories();
+        takePhotoBtn();
+        backButton();
+        builder = new AlertDialog.Builder(this);
+        setBtnCreate();
+    }
 
+    /**
+     * To get campus locations
+     */
+    private void getCategories() {
         new CategoryControllerApi().getAllCategoriesUsingGET(null,
                 new Response.Listener<List<Category>>() {
                     @Override
                     public void onResponse(List<Category> response) {
-                        categories = response;
-                        Log.i("PPP", response.toString());
+                        listCategories = response;
+                        setDefaultCategories();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.e("API error", "API error", error.getCause());
                     }
-                });
+                }
+        );
+    }
 
-        takePhotoBtn();
-        backButton();
-        builder = new AlertDialog.Builder(this);
-        setBtnCreate();
+    /**
+     * To set default locations in campus spinner
+     */
+    private void setDefaultCategories(){
+
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (Category cat: listCategories) {
+            arrayList.add(cat.getName());
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(arrayAdapter);
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categorySelected.add(arrayList.get(position));
+            }
+            @Override
+            public void onNothingSelected(AdapterView <?> parent) {
+            }
+        });
     }
 
     /**
@@ -224,9 +264,9 @@ public class ReportActivity extends AppCompatActivity {
         }
         incidentDto.setAuthor("demo@me.com");
         incidentDto.setCreatedAt(new Date());
-        incidentDto.setCategories(new ArrayList<>());
         incidentDto.setLocation(6l);
         Log.i("PPP", incidentDto.toString());
+        incidentDto.setCategories(categorySelected);
     }
 
     private void post() {

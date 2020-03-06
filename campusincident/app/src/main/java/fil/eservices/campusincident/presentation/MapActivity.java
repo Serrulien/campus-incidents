@@ -130,25 +130,6 @@ public class MapActivity extends AppCompatActivity implements
         this.renderMarkers(incidentList);
     }
 
-    private void fetchIncidentsAndRender() {
-        new LocationControllerApi().getAllLocationsUsingGET(
-                new Response.Listener<List<Location>>() {
-                    @Override
-                    public void onResponse(List<Location> response) {
-                        locationList = response;
-                        symbolManager.deleteAll();
-                        renderIncidents();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("API error", "API error", error.getCause());
-                    }
-                }
-        );
-    }
-
     /**
      * To display existant incidents on the map
      * @param incidents incidents
@@ -412,13 +393,27 @@ public class MapActivity extends AppCompatActivity implements
         }
     }
 
+
+    private void refreshMap(){
+        new IncidentControllerApi().getAllIncidentsUsingGET(new Response.Listener<List<Incident>>() {
+            @Override
+            public void onResponse(List<Incident> response) {
+                symbolManager.deleteAll();
+                incidentList=response;
+                renderIncidents();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+    }
+
     /**
      * To set default locations in campus spinner
      */
     private void setDefaultLocations(){
-        final LatLng citeScientifique = new LatLng(50.609621, 3.136460);
-        final LatLng pontDeBois = new LatLng(50.628211, 3.126170);
-        final LatLng moulins = new LatLng(50.619456, 3.068495);
 
         ArrayList<String> arrayList = new ArrayList<>();
         for (Location loc: locationList) {
@@ -434,6 +429,8 @@ public class MapActivity extends AppCompatActivity implements
                 Location selectedLocation = locationList.get(position);
                 LatLng geoloc = new LatLng(selectedLocation.getCenter().getLatitude(), selectedLocation.getCenter().getLongitude());
                 mapPositionCampus(geoloc);
+                refreshMap();
+
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {
@@ -610,7 +607,6 @@ public class MapActivity extends AppCompatActivity implements
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        fetchIncidentsAndRender();
     }
 
     @Override
@@ -618,7 +614,6 @@ public class MapActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         mapView.onStart();
-        fetchIncidentsAndRender();
     }
 
     @Override

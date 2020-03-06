@@ -62,7 +62,7 @@ public class CategoryControllerApi {
     Object postBody = null;
 
     // create path and map variables
-    String path = "/campusincident/categories";
+    String path = "/categories";
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -120,7 +120,7 @@ public class CategoryControllerApi {
 
 
     // create path and map variables
-    String path = "/campusincident/categories".replaceAll("\\{format\\}","json");
+    String path = "/categories".replaceAll("\\{format\\}","json");
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -186,7 +186,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/campusincident/categories";
+    String path = "/categories";
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -249,7 +249,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/campusincident/categories".replaceAll("\\{format\\}","json");
+    String path = "/categories".replaceAll("\\{format\\}","json");
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -314,7 +314,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/campusincident/categories/rename";
+    String path = "/categories/rename";
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -377,7 +377,7 @@ public class CategoryControllerApi {
     }
 
     // create path and map variables
-    String path = "/campusincident/categories/rename".replaceAll("\\{format\\}","json");
+    String path = "/categories/rename".replaceAll("\\{format\\}","json");
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
