@@ -57,6 +57,7 @@ import fil.eservices.campusincident.data.model.Incident;
 import fil.eservices.campusincident.data.model.Location;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,72 +93,7 @@ public class MapActivity extends AppCompatActivity implements
     private GeoJsonSource source;
 
     private List<Incident> incidentList;
-
-    private void renderIncidents() {
-        this.renderMarkers(incidentList);
-    }
-
-    private void renderMarkers(List<Incident> incidents) {
-        symbolManager.setIconAllowOverlap(true);
-        symbolManager.setTextAllowOverlap(true);
-
-        for (Incident incident: incidents) {
-            // Add click listener to open details activity
-            symbolManager.addClickListener(new OnSymbolClickListener() {
-                @Override
-                public void onAnnotationClick(Symbol symbol) {
-                    Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
-                    myIntent.putExtra("incident", incident);
-                    startActivity(myIntent);
-                }
-            });
-
-            Geolocation point = incident.getGeolocation();
-
-            // create a fixed symbol
-            SymbolOptions symbolOptions = new SymbolOptions()
-                    .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
-                    .withIconImage(MARKER_IMAGE_ID)
-                    .withIconSize(0.5f)
-                    .withDraggable(false);
-
-            symbolManager.create(symbolOptions);
-        }
-    }
-
-    private void fetchLocations() {
-        new LocationControllerApi().getAllLocationsUsingGET(
-                new Response.Listener<List<Location>>() {
-                    @Override
-                    public void onResponse(List<Location> response) {
-                        locationList = response;
-                        setDefaultLocations();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("API error", "API error", error.getCause());
-                    }
-                }
-        );
-    }
-
-    private void fetchIncidents() {
-        new IncidentControllerApi().getAllIncidentsUsingGET(
-                new Response.Listener<List<Incident>>() {
-                    @Override
-                    public void onResponse(List<Incident> response) {
-                        incidentList = response;
-                    }
-                }
-                , new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("API ERROR", "API ERROR", error.getCause());
-                    }
-                });
-    }
+    private HashMap<Long, Incident> IDSymbolIncident= new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +118,88 @@ public class MapActivity extends AppCompatActivity implements
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync((OnMapReadyCallback) this);
+    }
+
+    /**
+     * To display existant incidents on the map with list incidents
+     */
+    private void renderIncidents() {
+        this.renderMarkers(incidentList);
+    }
+
+    /**
+     * To display existant incidents on the map
+     * @param incidents incidents
+     */
+    private void renderMarkers(List<Incident> incidents) {
+        symbolManager.setIconAllowOverlap(true);
+        symbolManager.setTextAllowOverlap(true);
+
+        for (Incident incident: incidents) {
+            Geolocation point = incident.getGeolocation();
+
+            // create a fixed symbol
+            SymbolOptions symbolOptions = new SymbolOptions()
+                    .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
+                    .withIconImage(MARKER_IMAGE_ID)
+                    .withIconSize(0.5f)
+                    .withDraggable(false);
+
+            Symbol symbol = symbolManager.create(symbolOptions);
+            this.IDSymbolIncident.put(symbol.getId(), incident);
+
+        }
+        // Add click listener to open details activity
+        symbolManager.addClickListener(new OnSymbolClickListener() {
+            @Override
+            public void onAnnotationClick(Symbol symbol) {
+                if (IDSymbolIncident.containsKey(symbol.getId())){
+                    Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
+                    myIntent.putExtra("incident", IDSymbolIncident.get(symbol.getId()));
+                    startActivity(myIntent);
+                }
+            }
+        });
+    }
+
+    /**
+     * To get campus locations
+     */
+    private void fetchLocations() {
+        new LocationControllerApi().getAllLocationsUsingGET(
+                new Response.Listener<List<Location>>() {
+                    @Override
+                    public void onResponse(List<Location> response) {
+                        locationList = response;
+                        setDefaultLocations();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("API error", "API error", error.getCause());
+                    }
+                }
+        );
+    }
+
+    /**
+     * To get incidents
+     */
+    private void fetchIncidents() {
+        new IncidentControllerApi().getAllIncidentsUsingGET(
+                new Response.Listener<List<Incident>>() {
+                    @Override
+                    public void onResponse(List<Incident> response) {
+                        incidentList = response;
+                    }
+                }
+                , new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("API ERROR", "API ERROR", error.getCause());
+                    }
+                });
     }
 
     /**
@@ -216,18 +234,9 @@ public class MapActivity extends AppCompatActivity implements
         // set non data driven properties
         Toast.makeText(this, "Click sur le marqueur pour voir le détail", Toast.LENGTH_LONG).show();
 
-        symbolManager.deleteAll();
+        //symbolManager.deleteAll();
         symbolManager.setIconAllowOverlap(true);
         symbolManager.setTextAllowOverlap(true);
-
-        // Add click listener to open details activity
-        symbolManager.addClickListener(new OnSymbolClickListener() {
-            @Override
-            public void onAnnotationClick(Symbol symbol) {
-                Intent myIntent = new Intent(getBaseContext(),   DetailsActivity.class);
-                startActivity(myIntent);
-            }
-        });
 
         // create a fixed symbol
         SymbolOptions symbolOptions = new SymbolOptions()
