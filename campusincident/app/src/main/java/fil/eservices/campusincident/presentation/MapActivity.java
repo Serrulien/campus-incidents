@@ -41,7 +41,6 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
-import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolLongClickListener;
 import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
@@ -59,7 +58,6 @@ import fil.eservices.campusincident.data.model.Location;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.*;
 
@@ -67,8 +65,11 @@ public class MapActivity extends AppCompatActivity implements
         OnMapReadyCallback, OnLocationClickListener, PermissionsListener, OnCameraTrackingChangedListener, MapboxMap.OnMapLongClickListener {
 
     private static final String GEOJSON_SOURCE_ID = "GEOJSON_SOURCE_ID";
+    private static final String BLUE_GEOJSON_SOURCE_ID = "BLUE_GEOJSON_SOURCE_ID";
     private static final String MARKER_IMAGE_ID = "MARKER_IMAGE_ID";
+    private static final String BLUE_MARKER_IMAGE_ID = "BLUE_MARKER_IMAGE_ID";
     private static final String MARKER_LAYER_ID = "MARKER_LAYER_ID";
+    private static final String BLUE_MARKER_LAYER_ID = "BLUE_MARKER_LAYER_ID";
 
     private List<Location> locationList = new ArrayList<Location>();
 
@@ -80,6 +81,7 @@ public class MapActivity extends AppCompatActivity implements
     private Toolbar toolbar;
     private CameraUpdate cameraUpdate;
     private SymbolManager symbolManager;
+    private SymbolManager newIncidentSymbolManager;
     private MapboxMap mapboxMap;
     private LocationComponent locationComponent;
     private boolean isInTrackingMode;
@@ -215,10 +217,12 @@ public class MapActivity extends AppCompatActivity implements
             public void onStyleLoaded(@NonNull Style style) {
                 setUpData(style);
                 symbolManager = new SymbolManager(mapView, mapboxMap, style);
-                enableLocationComponent(style);
+                newIncidentSymbolManager = new SymbolManager(mapView, mapboxMap, style);
                 initSearchFab();
+                setUpMarkerBlue(style);
                 addUserLocations();
                 renderIncidents();
+                enableLocationComponent(style);
             }
         });
     }
@@ -234,18 +238,18 @@ public class MapActivity extends AppCompatActivity implements
         // set non data driven properties
         Toast.makeText(this, "Click sur le marqueur pour voir le détail", Toast.LENGTH_LONG).show();
 
-        //symbolManager.deleteAll();
-        symbolManager.setIconAllowOverlap(true);
-        symbolManager.setTextAllowOverlap(true);
+        newIncidentSymbolManager.deleteAll();
+        newIncidentSymbolManager.setIconAllowOverlap(true);
+        newIncidentSymbolManager.setTextAllowOverlap(true);
 
         // create a fixed symbol
         SymbolOptions symbolOptions = new SymbolOptions()
                 .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
-                .withIconImage(MARKER_IMAGE_ID)
-                .withIconSize(0.5f)
-                .withDraggable(true);
+                .withIconImage(BLUE_MARKER_IMAGE_ID)
+                .withIconSize(0.2f)
+                .withDraggable(false);
 
-        symbolManager.create(symbolOptions);
+        newIncidentSymbolManager.create(symbolOptions);
         return true;
     }
 
@@ -273,7 +277,7 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     /**
-     * Setup a layer with maki icons, eg. west coast city.
+     * Setup a layer with marker icons, eg. west coast city.
      * @param loadedStyle style
      */
     private void setUpMarkerLayer(@NonNull Style loadedStyle) {
@@ -284,6 +288,23 @@ public class MapActivity extends AppCompatActivity implements
                         iconAllowOverlap(true),
                         iconOffset(new Float[] {0f, -8f}
                 )));
+    }
+
+    /**
+     * Setup a layer with marker icons, eg. west coast city.
+     * @param loadedStyle style
+     */
+    private void setUpMarkerBlue(@NonNull Style loadedStyle) {
+        loadedStyle.addLayer(new SymbolLayer(BLUE_MARKER_LAYER_ID, BLUE_GEOJSON_SOURCE_ID)
+                .withProperties(
+                        iconImage(BLUE_MARKER_IMAGE_ID),
+                        iconSize(0.2f),
+                        iconAllowOverlap(true),
+                        iconOffset(new Float[] {0f, -8f}
+                        )));
+
+        loadedStyle.addImage(BLUE_MARKER_IMAGE_ID, BitmapFactory.decodeResource(
+                this.getResources(), R.drawable.blue_marker));
     }
 
     /**

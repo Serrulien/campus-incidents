@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fil.eservices.campusincident.R;
+import fil.eservices.campusincident.data.model.Category;
 import fil.eservices.campusincident.data.model.Incident;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -33,6 +34,14 @@ public class DetailsActivity extends AppCompatActivity {
             TextView descTV = findViewById(R.id.incident_description);
             descTV.setText(description);
         }
+
+        StringBuilder categories = new StringBuilder(" ");
+        for (Category cat: incident.getCategories()) {
+            categories.append(cat.getName());
+            categories.append(", ");
+        }
+        TextView catTV = findViewById(R.id.incident_category);
+        catTV.setText(categories.toString());
 
         backButton();
     }

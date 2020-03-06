@@ -12,23 +12,28 @@
 
 package fil.eservices.campusincident.data.model;
 
-import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
-@ApiModel(description = "")
-public class View {
+import java.io.Serializable;
 
-  @SerializedName("contentType")
-  private String contentType = null;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+
+@ApiModel(description = "")
+public class Category implements Serializable {
+
+  @SerializedName("name")
+  private String name = null;
 
   /**
    **/
-  @ApiModelProperty(value = "")
-  public String getContentType() {
-    return contentType;
+  @ApiModelProperty(required = true, value = "")
+  public String getName() {
+    return name;
   }
-  public void setContentType(String contentType) {
-    this.contentType = contentType;
+  public void setName(String name) {
+    this.name = name;
   }
 
 
@@ -40,23 +45,23 @@ public class View {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    View view = (View) o;
-    return (this.contentType == null ? view.contentType == null : this.contentType.equals(view.contentType));
+    Category category = (Category) o;
+    return (this.name == null ? category.name == null : this.name.equals(category.name));
   }
 
   @Override
   public int hashCode() {
     int result = 17;
-    result = 31 * result + (this.contentType == null ? 0: this.contentType.hashCode());
+    result = 31 * result + (this.name == null ? 0: this.name.hashCode());
     return result;
   }
 
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class View {\n");
+    sb.append("class Category {\n");
 
-    sb.append("  contentType: ").append(contentType).append("\n");
+    sb.append("  name: ").append(name).append("\n");
     sb.append("}\n");
     return sb.toString();
   }

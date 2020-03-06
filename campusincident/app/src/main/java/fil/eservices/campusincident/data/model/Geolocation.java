@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 @ApiModel(description = "")
 public class Geolocation implements Serializable {
-  
+
   @SerializedName("id")
   private Long id = null;
   @SerializedName("latitude")
@@ -68,8 +68,8 @@ public class Geolocation implements Serializable {
     }
     Geolocation geolocation = (Geolocation) o;
     return (this.id == null ? geolocation.id == null : this.id.equals(geolocation.id)) &&
-        (this.latitude == null ? geolocation.latitude == null : this.latitude.equals(geolocation.latitude)) &&
-        (this.longitude == null ? geolocation.longitude == null : this.longitude.equals(geolocation.longitude));
+            (this.latitude == null ? geolocation.latitude == null : this.latitude.equals(geolocation.latitude)) &&
+            (this.longitude == null ? geolocation.longitude == null : this.longitude.equals(geolocation.longitude));
   }
 
   @Override
@@ -85,7 +85,7 @@ public class Geolocation implements Serializable {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Geolocation {\n");
-    
+
     sb.append("  id: ").append(id).append("\n");
     sb.append("  latitude: ").append(latitude).append("\n");
     sb.append("  longitude: ").append(longitude).append("\n");
