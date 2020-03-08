@@ -404,6 +404,7 @@ public class MapActivity extends AppCompatActivity implements
             @Override
             public void onResponse(List<Incident> response) {
                 symbolManager.deleteAll();
+                newIncidentSymbolManager.deleteAll();
                 incidentList=response;
                 renderIncidents();
             }
@@ -434,8 +435,7 @@ public class MapActivity extends AppCompatActivity implements
                 Location selectedLocation = locationList.get(position);
                 LatLng geoloc = new LatLng(selectedLocation.getCenter().getLatitude(), selectedLocation.getCenter().getLongitude());
                 mapPositionCampus(geoloc);
-                refreshMap();
-
+                //refreshMap();
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {
