@@ -138,20 +138,25 @@ public class MapActivity extends AppCompatActivity implements
         symbolManager.setIconAllowOverlap(true);
         symbolManager.setTextAllowOverlap(true);
 
-        for (Incident incident: incidents) {
-            Geolocation point = incident.getGeolocation();
+        if(incidents != null){
+            for (Incident incident: incidents) {
+                Geolocation point = incident.getGeolocation();
 
-            // create a fixed symbol
-            SymbolOptions symbolOptions = new SymbolOptions()
-                    .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
-                    .withIconImage(MARKER_IMAGE_ID)
-                    .withIconSize(0.5f)
-                    .withDraggable(false);
+                // create a fixed symbol
+                SymbolOptions symbolOptions = new SymbolOptions()
+                        .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
+                        .withIconImage(MARKER_IMAGE_ID)
+                        .withIconSize(0.5f)
+                        .withDraggable(false);
 
-            Symbol symbol = symbolManager.create(symbolOptions);
-            this.IDSymbolIncident.put(symbol.getId(), incident);
+                Symbol symbol = symbolManager.create(symbolOptions);
+                this.IDSymbolIncident.put(symbol.getId(), incident);
 
+            }
+        }else {
+            return;
         }
+
         // Add click listener to open details activity
         symbolManager.addClickListener(new OnSymbolClickListener() {
             @Override
@@ -216,9 +221,9 @@ public class MapActivity extends AppCompatActivity implements
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                setUpData(style);
-                symbolManager = new SymbolManager(mapView, mapboxMap, style);
                 newIncidentSymbolManager = new SymbolManager(mapView, mapboxMap, style);
+                symbolManager = new SymbolManager(mapView, mapboxMap, style);
+                setUpData(style);
                 initSearchFab();
                 setUpMarkerBlue(style);
                 addUserLocations();
