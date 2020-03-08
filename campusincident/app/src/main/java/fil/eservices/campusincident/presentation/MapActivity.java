@@ -96,7 +96,7 @@ public class MapActivity extends AppCompatActivity implements
     private GeoJsonSource source;
 
     private List<Incident> incidentList;
-    private HashMap<Long, Incident> IDSymbolIncident= new HashMap<>();
+    private static HashMap<Long, Incident> IDSymbolIncident= new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +151,6 @@ public class MapActivity extends AppCompatActivity implements
 
                 Symbol symbol = symbolManager.create(symbolOptions);
                 this.IDSymbolIncident.put(symbol.getId(), incident);
-
             }
         }else {
             return;
@@ -406,7 +405,19 @@ public class MapActivity extends AppCompatActivity implements
                 symbolManager.deleteAll();
                 newIncidentSymbolManager.deleteAll();
                 incidentList=response;
-                renderIncidents();
+                for (Incident incident: incidentList) {
+                    Geolocation point = incident.getGeolocation();
+
+                    // create a fixed symbol
+                    SymbolOptions symbolOptions = new SymbolOptions()
+                            .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
+                            .withIconImage(MARKER_IMAGE_ID)
+                            .withIconSize(0.5f)
+                            .withDraggable(false);
+
+                    Symbol symbol = symbolManager.create(symbolOptions);
+                    MapActivity.IDSymbolIncident.put(symbol.getId(), incident);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -435,7 +446,7 @@ public class MapActivity extends AppCompatActivity implements
                 Location selectedLocation = locationList.get(position);
                 LatLng geoloc = new LatLng(selectedLocation.getCenter().getLatitude(), selectedLocation.getCenter().getLongitude());
                 mapPositionCampus(geoloc);
-                //refreshMap();
+                refreshMap();
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {
