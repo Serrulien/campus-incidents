@@ -150,7 +150,7 @@ public class MapActivity extends AppCompatActivity implements
                         .withDraggable(false);
 
                 Symbol symbol = symbolManager.create(symbolOptions);
-                this.IDSymbolIncident.put(symbol.getId(), incident);
+                IDSymbolIncident.put(symbol.getId(), incident);
             }
         }else {
             return;
@@ -404,20 +404,9 @@ public class MapActivity extends AppCompatActivity implements
             public void onResponse(List<Incident> response) {
                 symbolManager.deleteAll();
                 newIncidentSymbolManager.deleteAll();
+                IDSymbolIncident.clear();
                 incidentList=response;
-                for (Incident incident: incidentList) {
-                    Geolocation point = incident.getGeolocation();
-
-                    // create a fixed symbol
-                    SymbolOptions symbolOptions = new SymbolOptions()
-                            .withLatLng(new LatLng(point.getLatitude(), point.getLongitude()))
-                            .withIconImage(MARKER_IMAGE_ID)
-                            .withIconSize(0.5f)
-                            .withDraggable(false);
-
-                    Symbol symbol = symbolManager.create(symbolOptions);
-                    MapActivity.IDSymbolIncident.put(symbol.getId(), incident);
-                }
+                renderIncidents();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -446,7 +435,8 @@ public class MapActivity extends AppCompatActivity implements
                 Location selectedLocation = locationList.get(position);
                 LatLng geoloc = new LatLng(selectedLocation.getCenter().getLatitude(), selectedLocation.getCenter().getLongitude());
                 mapPositionCampus(geoloc);
-                refreshMap();
+                //refreshMap();
+                //onRestart();
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {
