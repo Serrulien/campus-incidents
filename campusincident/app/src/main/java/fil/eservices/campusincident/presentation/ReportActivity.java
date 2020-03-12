@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +19,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -46,6 +49,7 @@ import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
 import static android.graphics.Color.parseColor;
+import static android.view.View.GONE;
 
 
 public class ReportActivity extends AppCompatActivity {
@@ -65,6 +69,7 @@ public class ReportActivity extends AppCompatActivity {
     private List<Category> listCategories;
     private List<String> categorySelected = new ArrayList<>();
     AlertDialog.Builder builder;
+    private ProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,7 @@ public class ReportActivity extends AppCompatActivity {
         backButton();
         builder = new AlertDialog.Builder(this);
         setBtnCreate();
+        loadingProgressBar = findViewById(R.id.progress_bar_new_incident);
     }
 
     /**
@@ -163,6 +169,19 @@ public class ReportActivity extends AppCompatActivity {
                 dialog.dismiss();
                 preparePost();
                 post();
+                new CountDownTimer(4000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        loadingProgressBar.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        loadingProgressBar.setVisibility(GONE);
+                    }
+                }.start();
+                Intent myIntent = new Intent(getBaseContext(),   MapActivity.class);
+                startActivity(myIntent);
                 finish();
             }
         });
@@ -230,7 +249,7 @@ public class ReportActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
                     openCamera();
                 } else {
-                    Toast.makeText(this, "Permissiondenied...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission denied...", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -265,7 +284,6 @@ public class ReportActivity extends AppCompatActivity {
         incidentDto.setAuthor("demo@me.com");
         incidentDto.setCreatedAt(new Date());
         incidentDto.setLocation(6l);
-        Log.i("PPP", incidentDto.toString());
         incidentDto.setCategories(categorySelected);
     }
 
@@ -280,7 +298,6 @@ public class ReportActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(ReportActivity.this, "Erreur pendant l'envoi de l'incident", Toast.LENGTH_SHORT).show();
-                        Log.e("API ERROR", "API ERROR", error.getCause());
                     }
                 });
     }

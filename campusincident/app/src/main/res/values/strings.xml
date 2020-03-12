@@ -40,4 +40,6 @@
     <string name="dialog_message">Voulez-vous continuer ?</string>
     <string name="dialog_title">Confirmation</string>
     <string name="wish_resolve">Souhaiter la résolution</string>
+    <string name="email_login">mohamed.yahiatene.etu@univ-lille.fr</string>
+    <string name="password_login">administrateur</string>
 </resources>

@@ -660,6 +660,7 @@ public class MapActivity extends AppCompatActivity implements
         }
         Intent myIntent = new Intent(getBaseContext(),   ReportActivity.class);
         myIntent.putExtra("geoloc", newIncidentPoint);
+        finish();
         startActivity(myIntent);
     }
 

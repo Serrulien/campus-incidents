@@ -69,6 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
+                    android:text="@string/email_login"
                     android:textColor="@color/colorTextView"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="15sp"/>
@@ -80,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:hint="@string/password"
+                    android:text="@string/password_login"
                     android:textColor="@color/colorTextView"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="15sp"
