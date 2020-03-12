@@ -2,6 +2,9 @@ package fil.eservices.campusincident.presentation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -121,6 +125,27 @@ public class MapActivity extends AppCompatActivity implements
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync((OnMapReadyCallback) this);
+
+
+    }
+
+
+    // Creates and displays a notification
+    private void addNotification() {
+        // Builds your notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.logo_image)
+                .setContentTitle("Validation incident")
+                .setContentText("Votre incident à été validé");
+
+        // Creates the intent needed to show the notification
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
     }
 
     /**
@@ -665,6 +690,7 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     public void onButtonClickNotifications(View view) {
+        addNotification();
         Intent myIntent = new Intent(getBaseContext(),   NotificationActivity.class);
         startActivity(myIntent);
     }
