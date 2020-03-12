@@ -12,16 +12,15 @@
 
 package fil.eservices.campusincident.data.model;
 
-import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
+import java.io.Serializable;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
+import io.swagger.annotations.*;
+import com.google.gson.annotations.SerializedName;
 
 @ApiModel(description = "")
-public class IncidentDto {
-
+public class IncidentDto  implements Serializable {
+  
   @SerializedName("author")
   private String author = null;
   @SerializedName("categories")
@@ -30,6 +29,8 @@ public class IncidentDto {
   private Date createdAt = null;
   @SerializedName("description")
   private String description = null;
+  @SerializedName("imageId")
+  private Long imageId = null;
   @SerializedName("latitude")
   private Double latitude = null;
   @SerializedName("location")
@@ -80,6 +81,16 @@ public class IncidentDto {
   }
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  public Long getImageId() {
+    return imageId;
+  }
+  public void setImageId(Long imageId) {
+    this.imageId = imageId;
   }
 
   /**
@@ -143,14 +154,15 @@ public class IncidentDto {
     }
     IncidentDto incidentDto = (IncidentDto) o;
     return (this.author == null ? incidentDto.author == null : this.author.equals(incidentDto.author)) &&
-            (this.categories == null ? incidentDto.categories == null : this.categories.equals(incidentDto.categories)) &&
-            (this.createdAt == null ? incidentDto.createdAt == null : this.createdAt.equals(incidentDto.createdAt)) &&
-            (this.description == null ? incidentDto.description == null : this.description.equals(incidentDto.description)) &&
-            (this.latitude == null ? incidentDto.latitude == null : this.latitude.equals(incidentDto.latitude)) &&
-            (this.location == null ? incidentDto.location == null : this.location.equals(incidentDto.location)) &&
-            (this.longitude == null ? incidentDto.longitude == null : this.longitude.equals(incidentDto.longitude)) &&
-            (this.status == null ? incidentDto.status == null : this.status.equals(incidentDto.status)) &&
-            (this.title == null ? incidentDto.title == null : this.title.equals(incidentDto.title));
+        (this.categories == null ? incidentDto.categories == null : this.categories.equals(incidentDto.categories)) &&
+        (this.createdAt == null ? incidentDto.createdAt == null : this.createdAt.equals(incidentDto.createdAt)) &&
+        (this.description == null ? incidentDto.description == null : this.description.equals(incidentDto.description)) &&
+        (this.imageId == null ? incidentDto.imageId == null : this.imageId.equals(incidentDto.imageId)) &&
+        (this.latitude == null ? incidentDto.latitude == null : this.latitude.equals(incidentDto.latitude)) &&
+        (this.location == null ? incidentDto.location == null : this.location.equals(incidentDto.location)) &&
+        (this.longitude == null ? incidentDto.longitude == null : this.longitude.equals(incidentDto.longitude)) &&
+        (this.status == null ? incidentDto.status == null : this.status.equals(incidentDto.status)) &&
+        (this.title == null ? incidentDto.title == null : this.title.equals(incidentDto.title));
   }
 
   @Override
@@ -160,6 +172,7 @@ public class IncidentDto {
     result = 31 * result + (this.categories == null ? 0: this.categories.hashCode());
     result = 31 * result + (this.createdAt == null ? 0: this.createdAt.hashCode());
     result = 31 * result + (this.description == null ? 0: this.description.hashCode());
+    result = 31 * result + (this.imageId == null ? 0: this.imageId.hashCode());
     result = 31 * result + (this.latitude == null ? 0: this.latitude.hashCode());
     result = 31 * result + (this.location == null ? 0: this.location.hashCode());
     result = 31 * result + (this.longitude == null ? 0: this.longitude.hashCode());
@@ -172,11 +185,12 @@ public class IncidentDto {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class IncidentDto {\n");
-
+    
     sb.append("  author: ").append(author).append("\n");
     sb.append("  categories: ").append(categories).append("\n");
     sb.append("  createdAt: ").append(createdAt).append("\n");
     sb.append("  description: ").append(description).append("\n");
+    sb.append("  imageId: ").append(imageId).append("\n");
     sb.append("  latitude: ").append(latitude).append("\n");
     sb.append("  location: ").append(location).append("\n");
     sb.append("  longitude: ").append(longitude).append("\n");

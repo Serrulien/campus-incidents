@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 @ApiModel(description = "")
 public class View {
-
+  
   @SerializedName("contentType")
   private String contentType = null;
 
@@ -55,7 +55,7 @@ public class View {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class View {\n");
-
+    
     sb.append("  contentType: ").append(contentType).append("\n");
     sb.append("}\n");
     return sb.toString();

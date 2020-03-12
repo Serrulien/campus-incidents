@@ -12,16 +12,12 @@
 
 package fil.eservices.campusincident.data.model;
 
+import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "")
 public class CategoryRenameDto {
-
+  
   @SerializedName("from")
   private String from = null;
   @SerializedName("to")
@@ -58,7 +54,7 @@ public class CategoryRenameDto {
     }
     CategoryRenameDto categoryRenameDto = (CategoryRenameDto) o;
     return (this.from == null ? categoryRenameDto.from == null : this.from.equals(categoryRenameDto.from)) &&
-            (this.to == null ? categoryRenameDto.to == null : this.to.equals(categoryRenameDto.to));
+        (this.to == null ? categoryRenameDto.to == null : this.to.equals(categoryRenameDto.to));
   }
 
   @Override
@@ -73,7 +69,7 @@ public class CategoryRenameDto {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class CategoryRenameDto {\n");
-
+    
     sb.append("  from: ").append(from).append("\n");
     sb.append("  to: ").append(to).append("\n");
     sb.append("}\n");

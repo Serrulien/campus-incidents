@@ -12,17 +12,14 @@
 
 package fil.eservices.campusincident.data.model;
 
+import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-
 @ApiModel(description = "")
 public class Category implements Serializable {
-
+  
   @SerializedName("name")
   private String name = null;
 
@@ -60,7 +57,7 @@ public class Category implements Serializable {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Category {\n");
-
+    
     sb.append("  name: ").append(name).append("\n");
     sb.append("}\n");
     return sb.toString();

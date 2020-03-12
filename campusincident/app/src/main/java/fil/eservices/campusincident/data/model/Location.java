@@ -12,16 +12,14 @@
 
 package fil.eservices.campusincident.data.model;
 
+import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 @ApiModel(description = "")
 public class Location implements Serializable {
-
+  
   @SerializedName("center")
   private Geolocation center = null;
   @SerializedName("id")
@@ -96,10 +94,10 @@ public class Location implements Serializable {
     }
     Location location = (Location) o;
     return (this.center == null ? location.center == null : this.center.equals(location.center)) &&
-            (this.id == null ? location.id == null : this.id.equals(location.id)) &&
-            (this.name == null ? location.name == null : this.name.equals(location.name)) &&
-            (this.radius == null ? location.radius == null : this.radius.equals(location.radius)) &&
-            (this.tzName == null ? location.tzName == null : this.tzName.equals(location.tzName));
+        (this.id == null ? location.id == null : this.id.equals(location.id)) &&
+        (this.name == null ? location.name == null : this.name.equals(location.name)) &&
+        (this.radius == null ? location.radius == null : this.radius.equals(location.radius)) &&
+        (this.tzName == null ? location.tzName == null : this.tzName.equals(location.tzName));
   }
 
   @Override
@@ -117,7 +115,7 @@ public class Location implements Serializable {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Location {\n");
-
+    
     sb.append("  center: ").append(center).append("\n");
     sb.append("  id: ").append(id).append("\n");
     sb.append("  name: ").append(name).append("\n");

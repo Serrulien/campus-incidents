@@ -12,17 +12,15 @@
 
 package fil.eservices.campusincident.data.model;
 
-import com.google.gson.annotations.SerializedName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
+import io.swagger.annotations.*;
+import com.google.gson.annotations.SerializedName;
 
 @ApiModel(description = "")
 public class Incident implements Serializable {
-
+  
   @SerializedName("author")
   private String author = null;
   @SerializedName("categories")
@@ -111,8 +109,8 @@ public class Incident implements Serializable {
   public Long getImageId() {
     return imageId;
   }
-  public void setImageId(Long id) {
-    this.imageId = id;
+  public void setImageId(Long imageId) {
+    this.imageId = imageId;
   }
 
   /**
@@ -127,7 +125,7 @@ public class Incident implements Serializable {
 
   /**
    **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(value = "")
   public String getStatus() {
     return status;
   }
@@ -156,14 +154,15 @@ public class Incident implements Serializable {
     }
     Incident incident = (Incident) o;
     return (this.author == null ? incident.author == null : this.author.equals(incident.author)) &&
-            (this.categories == null ? incident.categories == null : this.categories.equals(incident.categories)) &&
-            (this.createdAt == null ? incident.createdAt == null : this.createdAt.equals(incident.createdAt)) &&
-            (this.description == null ? incident.description == null : this.description.equals(incident.description)) &&
-            (this.geolocation == null ? incident.geolocation == null : this.geolocation.equals(incident.geolocation)) &&
-            (this.id == null ? incident.id == null : this.id.equals(incident.id)) &&
-            (this.location == null ? incident.location == null : this.location.equals(incident.location)) &&
-            (this.status == null ? incident.status == null : this.status.equals(incident.status)) &&
-            (this.title == null ? incident.title == null : this.title.equals(incident.title));
+        (this.categories == null ? incident.categories == null : this.categories.equals(incident.categories)) &&
+        (this.createdAt == null ? incident.createdAt == null : this.createdAt.equals(incident.createdAt)) &&
+        (this.description == null ? incident.description == null : this.description.equals(incident.description)) &&
+        (this.geolocation == null ? incident.geolocation == null : this.geolocation.equals(incident.geolocation)) &&
+        (this.id == null ? incident.id == null : this.id.equals(incident.id)) &&
+        (this.imageId == null ? incident.imageId == null : this.imageId.equals(incident.imageId)) &&
+        (this.location == null ? incident.location == null : this.location.equals(incident.location)) &&
+        (this.status == null ? incident.status == null : this.status.equals(incident.status)) &&
+        (this.title == null ? incident.title == null : this.title.equals(incident.title));
   }
 
   @Override
@@ -175,6 +174,7 @@ public class Incident implements Serializable {
     result = 31 * result + (this.description == null ? 0: this.description.hashCode());
     result = 31 * result + (this.geolocation == null ? 0: this.geolocation.hashCode());
     result = 31 * result + (this.id == null ? 0: this.id.hashCode());
+    result = 31 * result + (this.imageId == null ? 0: this.imageId.hashCode());
     result = 31 * result + (this.location == null ? 0: this.location.hashCode());
     result = 31 * result + (this.status == null ? 0: this.status.hashCode());
     result = 31 * result + (this.title == null ? 0: this.title.hashCode());
@@ -185,13 +185,14 @@ public class Incident implements Serializable {
   public String toString()  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Incident {\n");
-
+    
     sb.append("  author: ").append(author).append("\n");
     sb.append("  categories: ").append(categories).append("\n");
     sb.append("  createdAt: ").append(createdAt).append("\n");
     sb.append("  description: ").append(description).append("\n");
     sb.append("  geolocation: ").append(geolocation).append("\n");
     sb.append("  id: ").append(id).append("\n");
+    sb.append("  imageId: ").append(imageId).append("\n");
     sb.append("  location: ").append(location).append("\n");
     sb.append("  status: ").append(status).append("\n");
     sb.append("  title: ").append(title).append("\n");
