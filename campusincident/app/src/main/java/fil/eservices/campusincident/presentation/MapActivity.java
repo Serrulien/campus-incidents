@@ -126,11 +126,12 @@ public class MapActivity extends AppCompatActivity implements
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync((OnMapReadyCallback) this);
 
-
     }
 
 
-    // Creates and displays a notification
+    /**
+     * Creates and displays a notification
+     */
     private void addNotification() {
         // Builds your notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -247,11 +248,11 @@ public class MapActivity extends AppCompatActivity implements
             public void onStyleLoaded(@NonNull Style style) {
                 newIncidentSymbolManager = new SymbolManager(mapView, mapboxMap, style);
                 symbolManager = new SymbolManager(mapView, mapboxMap, style);
+                renderIncidents();
                 setUpData(style);
                 initSearchFab();
                 setUpMarkerBlue(style);
                 addUserLocations();
-                renderIncidents();
                 enableLocationComponent(style);
             }
         });
