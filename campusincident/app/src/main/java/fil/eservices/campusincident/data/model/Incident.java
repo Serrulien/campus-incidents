@@ -35,6 +35,8 @@ public class Incident implements Serializable {
   private Geolocation geolocation = null;
   @SerializedName("id")
   private Long id = null;
+  @SerializedName("imageId")
+  private Long imageId = null;
   @SerializedName("location")
   private Location location = null;
   @SerializedName("status")
@@ -101,6 +103,16 @@ public class Incident implements Serializable {
   }
   public void setId(Long id) {
     this.id = id;
+  }
+
+  /**
+   **/
+  @ApiModelProperty(value = "")
+  public Long getImageId() {
+    return imageId;
+  }
+  public void setImageId(Long id) {
+    this.imageId = id;
   }
 
   /**

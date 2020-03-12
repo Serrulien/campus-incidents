@@ -28,6 +28,7 @@
         <TextView
                 android:id="@+id/name_details_incident"
                 android:layout_marginEnd="64dp"
+                android:layout_marginRight="64dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -75,14 +76,11 @@
                     android:layout_marginTop="8dp"
                     tools:context=".presentation.ReportActivity">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/shapeableImageView"
-                        android:layout_width="350dp"
-                        android:layout_height="250dp"
-                        android:src="@mipmap/cristal"
-                        android:layout_gravity="center">
 
-                </com.google.android.material.imageview.ShapeableImageView>
+                <ImageView
+                    android:id="@+id/incident_detail_image"
+                    android:layout_width="350dp"
+                    android:layout_height="250dp" />
 
 
             </LinearLayout>
