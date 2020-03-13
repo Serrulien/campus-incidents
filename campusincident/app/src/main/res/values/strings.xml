@@ -31,7 +31,7 @@
     <string name="other_cat">Autres catégories</string>
     <string name="take_photo">Prendre une photo</string>
     <string name="description_hint">Description</string>
-    <string name="title_hint">Titre</string>
+    <string name="title_hint">Titre*</string>
     <string name="signaler_un_incident">Signaler un incident</string>
     <string name="incident_details_title">Détails de l\'incident</string>
     <string name="incident_notifications">Notifications</string>
