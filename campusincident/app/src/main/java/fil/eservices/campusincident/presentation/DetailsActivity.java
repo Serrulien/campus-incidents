@@ -13,6 +13,9 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 import fil.eservices.campusincident.ImageApi;
 import fil.eservices.campusincident.R;
 import fil.eservices.campusincident.data.model.Category;
@@ -43,29 +46,39 @@ public class DetailsActivity extends AppCompatActivity {
                     .placeholder(CircularProgressDrawableFactory.create(this))
                     .into(illustration);
         }
-
-
+        
         numberResolve = findViewById(R.id.nombre_evaluation);
 
         TextView title = findViewById(R.id.incident_name);
         title.setText(incident.getTitle());
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
         TextView date = findViewById(R.id.incident_date);
-        date.setText(incident.getCreatedAt().toString());
+        date.setText(dateFormat.format(incident.getCreatedAt()));
 
+        TextView descTV = findViewById(R.id.incident_description);
         String description = incident.getDescription();
-        if(description != null) {
-            TextView descTV = findViewById(R.id.incident_description);
-            descTV.setText(description);
+        if(description == null || description.trim().length() == 0) {
+            descTV.setVisibility(View.GONE);
+        } else {
+            descTV.setText(description.trim());
         }
 
-        StringBuilder categories = new StringBuilder(" ");
-        for (Category cat: incident.getCategories()) {
-            categories.append(cat.getName());
-            categories.append(", ");
-        }
         TextView catTV = findViewById(R.id.incident_category);
-        catTV.setText(categories.toString());
+        if (incident.getCategories().size() == 0) {
+            catTV.setVisibility(View.GONE);
+        } else {
+            StringBuilder categories = new StringBuilder(" ");
+            for (Category cat: incident.getCategories()) {
+                categories.append(cat.getName());
+                categories.append(", ");
+            }
+            String catsoutput = categories.toString();
+            catsoutput = catsoutput.replaceAll(",$", "");
+            catTV.setText(catsoutput);
+        }
+
 
         setBtnCreate();
         backButton();
