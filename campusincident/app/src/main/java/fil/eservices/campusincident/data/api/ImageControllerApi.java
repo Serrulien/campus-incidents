@@ -12,11 +12,15 @@
 
 package fil.eservices.campusincident.data.api;
 
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -152,11 +156,11 @@ public class ImageControllerApi {
     if (contentType.startsWith("multipart/form-data")) {
       // file uploading
       MultipartEntityBuilder localVarBuilder = MultipartEntityBuilder.create();
+      localVarBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
       if (file != null) {
         localVarBuilder.addBinaryBody("file", file);
       }
-
 
       HttpEntity httpEntity = localVarBuilder.build();
       postBody = httpEntity;

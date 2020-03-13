@@ -12,6 +12,8 @@
 
 package fil.eservices.campusincident.data;
 
+import android.util.Log;
+
 import com.android.volley.*;
 import com.android.volley.toolbox.*;
 import com.google.gson.JsonParseException;
@@ -434,6 +436,7 @@ public class ApiInvoker {
           request = new PostRequest(url, headers, contentType, new StringEntity(formParamStr, "UTF-8"), stringRequest, errorListener);
        } else if (body != null) {
           if (body instanceof HttpEntity) {
+            Log.e("PPP", ((HttpEntity) body).toString());
           request = new PostRequest(url, headers, null, (HttpEntity) body, stringRequest, errorListener);
           } else {
              request = new PostRequest(url, headers, contentType, new StringEntity(serialize(body), "UTF-8"), stringRequest, errorListener);
@@ -488,7 +491,7 @@ public class ApiInvoker {
     if (request != null) {
         request.setRetryPolicy(new DefaultRetryPolicy((int)TimeUnit.SECONDS.toMillis(this.connectionTimeout), DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
-
+    Log.e("PPP", request.toString());
     return request;
   }
 

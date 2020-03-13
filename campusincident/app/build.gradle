@@ -65,6 +65,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient"
     }
+    implementation "com.squareup.okhttp3:okhttp:3.12.3"
     compile "com.android.volley:volley:${volley_version}"
     testCompile "junit:junit:$junit_version"
     testCompile "org.robolectric:robolectric:${robolectric_version}"

@@ -2,6 +2,7 @@ package fil.eservices.campusincident.presentation;
 
 import android.Manifest;
 import android.Manifest.permission;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -26,11 +28,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ArrayList;
@@ -38,9 +44,12 @@ import java.util.List;
 
 import fil.eservices.campusincident.R;
 import fil.eservices.campusincident.data.api.CategoryControllerApi;
+import fil.eservices.campusincident.data.api.ImageControllerApi;
+import fil.eservices.campusincident.data.api.ImageControllerApi2;
 import fil.eservices.campusincident.data.api.IncidentControllerApi;
 import fil.eservices.campusincident.data.api.LocationControllerApi;
 import fil.eservices.campusincident.data.model.Category;
+import fil.eservices.campusincident.data.model.ImageSaved;
 import fil.eservices.campusincident.data.model.Incident;
 import fil.eservices.campusincident.data.model.IncidentDto;
 import fil.eservices.campusincident.data.model.Location;
@@ -59,7 +68,8 @@ public class ReportActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private Button mCaptureBtn;
-    private Uri imageUri;
+    private Uri photoUri;
+    private File photoFile;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int PERMISSION_CODE = 1000;
     private int IMAGE_CAPTURE_CODE = 1001;
@@ -70,6 +80,10 @@ public class ReportActivity extends AppCompatActivity {
     private List<String> categorySelected = new ArrayList<>();
     AlertDialog.Builder builder;
     private ProgressBar loadingProgressBar;
+
+    private boolean hasTakenImage = false;
+    private boolean isImageUploadDone = false;
+    private Long saveImageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,12 +176,17 @@ public class ReportActivity extends AppCompatActivity {
         // 2. Chain together various setter methods to set the dialog characteristics
         builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
 
-
         // Add the buttons
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
-                preparePost();
+                Log.e("PPP", "COUCOU");
+                Log.e("PPP", String.valueOf(hasTakenImage));
+                Log.e("PPP", String.valueOf(isImageUploadDone));
+                if(hasTakenImage && !isImageUploadDone) {
+                    Toast.makeText(ReportActivity.this, "Veuillez attendre la fin du téléversement de l'image", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 post();
                 new CountDownTimer(4000, 1000) {
                     @Override
@@ -224,17 +243,41 @@ public class ReportActivity extends AppCompatActivity {
         });
     }
 
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        //File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        return image;
+    }
+
+
     /**
      * To open camera component
      */
     private void openCamera() {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
-        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            photoFile = null;
+            try {
+                photoFile = this.createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (photoFile != null) {
+                photoUri = FileProvider.getUriForFile(this,
+                        "fil.eservices.campusincident.provider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, IMAGE_CAPTURE_CODE);
+            }
+        }
     }
 
     /**
@@ -262,11 +305,30 @@ public class ReportActivity extends AppCompatActivity {
      * @param data data
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            imageView.setImageURI(imageUri);
+        Log.e("PPP", ""+requestCode+" "+resultCode);
+        if (resultCode == RESULT_OK && requestCode == IMAGE_CAPTURE_CODE) {
+            imageView.setImageURI(photoUri);
+            hasTakenImage = true;
+            uploadImage(photoFile);
         }
+    }
+
+    private void uploadImage(File image) {
+        new ImageControllerApi2().handleFileUploadUsingPOST(image,
+                (Response.Listener<ImageSaved>) response -> {
+                    isImageUploadDone = true;
+                    saveImageId = response.getId();
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        isImageUploadDone = false;
+                        Log.e("PPP", error.toString());
+                        Toast.makeText(ReportActivity.this, "Erreur pendant le téléversement de l'image", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void preparePost() {
@@ -284,10 +346,14 @@ public class ReportActivity extends AppCompatActivity {
         incidentDto.setAuthor("demo@me.com");
         incidentDto.setCreatedAt(new Date());
         incidentDto.setLocation(6l);
+        incidentDto.setImageId(saveImageId);
         incidentDto.setCategories(categorySelected);
+        Log.e("PPP", incidentDto.toString());
     }
 
     private void post() {
+        Log.e("PPP", "POST");
+        preparePost();
         new IncidentControllerApi().newIncidentUsingPOST(incidentDto,
                 new Response.Listener<Incident>() {
                     @Override
