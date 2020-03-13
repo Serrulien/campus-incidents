@@ -67,6 +67,15 @@
                 android:orientation="vertical"
                 tools:context=".presentation.ReportActivity">
 
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="*Champ obligatoire"
+                android:textSize="8sp"
+                android:layout_marginLeft="120dp">
+
+            </TextView>
+
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/report_title_wrapper"
                     android:layout_width="match_parent"
@@ -84,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorUnivLille"
                         android:ems="10"
-                        android:hint="@string/title_hint"
+                        android:hint= "@string/title_hint"
                         android:inputType="textPersonName"
                         android:textCursorDrawable="@color/colorUnivLille" />
             </com.google.android.material.textfield.TextInputLayout>
