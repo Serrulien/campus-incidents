@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -85,12 +86,14 @@ public class ReportActivity extends AppCompatActivity {
     private boolean hasTakenImage = false;
     private boolean isImageUploadDone = false;
     private Long saveImageId;
+    private EditText reportTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_incident);
         spinnerCategory = findViewById(R.id.categories_spinner);
+        reportTitle = findViewById(R.id.report_title);
         getCategories();
         takePhotoBtn();
         backButton();
@@ -187,29 +190,33 @@ public class ReportActivity extends AppCompatActivity {
         // Add the buttons
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                Log.e("PPP", "COUCOU");
-                Log.e("PPP", String.valueOf(hasTakenImage));
-                Log.e("PPP", String.valueOf(isImageUploadDone));
-                if(hasTakenImage && !isImageUploadDone) {
-                    Toast.makeText(ReportActivity.this, "Veuillez attendre la fin du téléversement de l'image", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                post();
-                new CountDownTimer(4000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        loadingProgressBar.setVisibility(View.VISIBLE);
+                if ("".contentEquals(reportTitle.getText())){
+                    Toast.makeText(ReportActivity.this, "Le champ Titre est obligatoire", Toast.LENGTH_LONG).show();
+                }else {
+                    dialog.dismiss();
+                    Log.e("PPP", "COUCOU");
+                    Log.e("PPP", String.valueOf(hasTakenImage));
+                    Log.e("PPP", String.valueOf(isImageUploadDone));
+                    if (hasTakenImage && !isImageUploadDone) {
+                        Toast.makeText(ReportActivity.this, "Veuillez attendre la fin du téléversement de l'image", Toast.LENGTH_LONG).show();
+                        return;
                     }
+                    post();
+                    new CountDownTimer(4000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            loadingProgressBar.setVisibility(View.VISIBLE);
+                        }
 
-                    @Override
-                    public void onFinish() {
-                        loadingProgressBar.setVisibility(GONE);
-                    }
-                }.start();
-                Intent myIntent = new Intent(getBaseContext(),   MapActivity.class);
-                startActivity(myIntent);
-                finish();
+                        @Override
+                        public void onFinish() {
+                            loadingProgressBar.setVisibility(GONE);
+                        }
+                    }.start();
+                    Intent myIntent = new Intent(getBaseContext(), MapActivity.class);
+                    startActivity(myIntent);
+                    finish();
+                }
             }
         });
 
