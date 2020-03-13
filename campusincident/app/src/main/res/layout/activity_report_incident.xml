@@ -173,29 +173,6 @@
 
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/autres_cat_wrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="80"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-            >
-
-                <EditText
-                        android:id="@+id/autres_cat"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-
-                        android:backgroundTint="@color/colorUnivLille"
-                        android:inputType="textPersonName"
-                        android:hint="@string/other_cat"
-                        android:textCursorDrawable="@color/colorUnivLille" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
                     android:id="@+id/btn_create_incident"
                     android:layout_width="wrap_content"

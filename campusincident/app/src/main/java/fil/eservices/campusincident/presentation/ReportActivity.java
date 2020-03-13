@@ -77,6 +77,7 @@ public class ReportActivity extends AppCompatActivity {
     private Button btnCreate;
     private Spinner spinnerCategory;
     private List<Category> listCategories;
+    private boolean noCategory = true;
     private List<String> categorySelected = new ArrayList<>();
     AlertDialog.Builder builder;
     private ProgressBar loadingProgressBar;
@@ -125,6 +126,7 @@ public class ReportActivity extends AppCompatActivity {
     private void setDefaultCategories(){
 
         ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("aucune");
         for (Category cat: listCategories) {
             arrayList.add(cat.getName());
         }
@@ -135,7 +137,13 @@ public class ReportActivity extends AppCompatActivity {
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                categorySelected.add(arrayList.get(position));
+                String item = arrayList.get(position);
+                if(item.equals("aucune")) {
+                    categorySelected = new ArrayList();
+                } else {
+                    categorySelected = new ArrayList();
+                    categorySelected.add(arrayList.get(position));
+                }
             }
             @Override
             public void onNothingSelected(AdapterView <?> parent) {

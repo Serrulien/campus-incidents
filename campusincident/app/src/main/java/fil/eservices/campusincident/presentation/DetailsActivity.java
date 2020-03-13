@@ -61,6 +61,8 @@ public class DetailsActivity extends AppCompatActivity {
         String description = incident.getDescription();
         if(description == null || description.trim().length() == 0) {
             descTV.setVisibility(View.GONE);
+            TextView descLabelTV = findViewById(R.id.incident_description_text);
+            descLabelTV.setVisibility(View.GONE);
         } else {
             descTV.setText(description.trim());
         }
@@ -68,6 +70,8 @@ public class DetailsActivity extends AppCompatActivity {
         TextView catTV = findViewById(R.id.incident_category);
         if (incident.getCategories().size() == 0) {
             catTV.setVisibility(View.GONE);
+            TextView catLabelTV = findViewById(R.id.incident_category_text);
+            catLabelTV.setVisibility(View.GONE);
         } else {
             StringBuilder categories = new StringBuilder(" ");
             for (Category cat: incident.getCategories()) {
@@ -75,10 +79,9 @@ public class DetailsActivity extends AppCompatActivity {
                 categories.append(", ");
             }
             String catsoutput = categories.toString();
-            catsoutput = catsoutput.replaceAll(",$", "");
+            catsoutput = catsoutput.replaceAll("\\s*,\\s*$", "");
             catTV.setText(catsoutput);
         }
-
 
         setBtnCreate();
         backButton();
