@@ -66,7 +66,9 @@ public class ApiInvoker {
   }
 
   private ApiInvoker(Cache cache, Network network, int threadPoolSize, ResponseDelivery delivery, int connectionTimeout) {
-    if(cache == null) cache = new NoCache();
+    if(cache == null) {
+      cache = new NoCache();
+    }
     if(network == null) {
       HttpStack stack = new HurlStack();
       network = new BasicNetwork(stack);
@@ -205,7 +207,9 @@ public class ApiInvoker {
   }
 
   public static ApiInvoker getInstance() {
-    if (INSTANCE == null) initializeInstance();
+    if (INSTANCE == null) {
+      initializeInstance();
+    }
     return INSTANCE;
   }
 
@@ -338,7 +342,9 @@ public class ApiInvoker {
   private void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
     for (String authName : authNames) {
       Authentication auth = authentications.get(authName);
-      if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
+      if (auth == null) {
+        throw new RuntimeException("Authentication undefined: " + authName);
+      }
         auth.applyToParams(queryParams, headerParams);
     }
   }
@@ -389,7 +395,7 @@ public class ApiInvoker {
     String querystring = b.substring(0, b.length() - 1);
     String url = host + path + querystring;
 
-    HashMap<String, String> headers = new HashMap<String, String>();
+    HashMap<String, String> headers = new HashMap<>();
 
     for(String key : headerParams.keySet()) {
       headers.put(key, headerParams.get(key));

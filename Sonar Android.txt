@@ -1,0 +1,13 @@
+# Campus Incident
+## Retour d’expérience concernant la mise en place de Sonar 
+### Julien Serrurier
+### Mohamed Yahiatene
+
+#### Interface Sonar :
+- Sur le Dashboard du projet nous avons un visuel complet sur les indicateurs de la qualité du code mais également la possibilité de naviguer entre les différents indicateurs (Bugs, duplication, dette technique, ...etc.)
+- Selon moi (Mohamed) le point fort de Sonar c'est qu'il ne donne pas simplement des indicateurs sur la santé du projet mais il offre des pistes réelles pour améliorer le code.
+- Même si les règles déjà définies dans Sonar restent standards et fiables, il est parfois préférable de désactiver certaines afin d'éviter une immense dette technique sur des lignes de code peu productives.
+
+#### Sonar et Android :
+- Sur le principe, il est assez simple d'effectuer cette liaison en configurant les build.gradle au niveau application et au niveau projet, cependant, cela nous a pris énormément de temps sur des erreurs liés aux versions de Sonar et de Gradle notamment.
+- Pour notre projet, nous avons utilisé des APIs tel que Swagger et MapBox, ce qui rend les tests unitaires très compliqués à réaliser, nous nous sommes penchés donc que sur l'amélioration du code pour le rendre maintenable et moins vulnérable.
