@@ -2,9 +2,7 @@ package fil.eservices.campusincident.presentation;
 
 import android.Manifest;
 import android.Manifest.permission;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,48 +14,29 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import fil.eservices.campusincident.R;
+import fil.eservices.campusincident.data.api.CategoryControllerApi;
+import fil.eservices.campusincident.data.api.ImageControllerApi2;
+import fil.eservices.campusincident.data.api.IncidentControllerApi;
+import fil.eservices.campusincident.data.model.Category;
+import fil.eservices.campusincident.data.model.ImageSaved;
+import fil.eservices.campusincident.data.model.Incident;
+import fil.eservices.campusincident.data.model.IncidentDto;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.List;
 
-import fil.eservices.campusincident.R;
-import fil.eservices.campusincident.data.api.CategoryControllerApi;
-import fil.eservices.campusincident.data.api.ImageControllerApi;
-import fil.eservices.campusincident.data.api.ImageControllerApi2;
-import fil.eservices.campusincident.data.api.IncidentControllerApi;
-import fil.eservices.campusincident.data.api.LocationControllerApi;
-import fil.eservices.campusincident.data.model.Category;
-import fil.eservices.campusincident.data.model.ImageSaved;
-import fil.eservices.campusincident.data.model.Incident;
-import fil.eservices.campusincident.data.model.IncidentDto;
-import fil.eservices.campusincident.data.model.Location;
-
-import static android.graphics.Color.BLUE;
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
 import static android.graphics.Color.parseColor;
 import static android.view.View.GONE;
 
@@ -283,7 +262,7 @@ public class ReportActivity extends AppCompatActivity {
             try {
                 photoFile = this.createImageFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d("Report","open camera");
             }
             if (photoFile != null) {
                 photoUri = FileProvider.getUriForFile(this,

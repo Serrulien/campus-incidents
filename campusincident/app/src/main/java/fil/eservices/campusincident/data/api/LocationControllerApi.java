@@ -21,10 +21,7 @@ import fil.eservices.campusincident.data.model.Location;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -179,7 +176,7 @@ public class LocationControllerApi {
     }
 
     // create path and map variables
-    String path = "/locations/{id}".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+    String path = "/locations/{id}".replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(Objects.requireNonNull(id).toString()));
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -241,7 +238,7 @@ public class LocationControllerApi {
     }
 
     // create path and map variables
-    String path = "/locations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(id.toString()));
+    String path = "/locations/{id}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "id" + "\\}", apiInvoker.escapeString(Objects.requireNonNull(id).toString()));
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();

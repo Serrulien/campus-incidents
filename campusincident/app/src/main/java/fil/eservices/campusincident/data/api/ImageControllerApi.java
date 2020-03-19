@@ -12,29 +12,20 @@
 
 package fil.eservices.campusincident.data.api;
 
-import android.util.Log;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-
 import fil.eservices.campusincident.data.ApiException;
 import fil.eservices.campusincident.data.ApiInvoker;
 import fil.eservices.campusincident.data.Pair;
 import fil.eservices.campusincident.data.model.ImageSaved;
-import fil.eservices.campusincident.data.model.Location;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+
+import java.io.File;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 public class ImageControllerApi {
   String basePath = "http://54.38.242.184:8080";
@@ -207,7 +198,7 @@ public class ImageControllerApi {
     }
 
     // create path and map variables
-    String path = "/images/{imageId}".replaceAll("\\{" + "imageId" + "\\}", apiInvoker.escapeString(imageId.toString()));
+    String path = "/images/{imageId}".replaceAll("\\{" + "imageId" + "\\}", apiInvoker.escapeString(Objects.requireNonNull(imageId).toString()));
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();
@@ -269,7 +260,7 @@ public class ImageControllerApi {
     }
 
     // create path and map variables
-    String path = "/images/{imageId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "imageId" + "\\}", apiInvoker.escapeString(imageId.toString()));
+    String path = "/images/{imageId}".replaceAll("\\{format\\}","json").replaceAll("\\{" + "imageId" + "\\}", apiInvoker.escapeString(Objects.requireNonNull(imageId).toString()));
 
     // query params
     List<Pair> queryParams = new ArrayList<Pair>();

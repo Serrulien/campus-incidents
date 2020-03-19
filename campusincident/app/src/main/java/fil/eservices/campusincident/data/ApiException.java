@@ -16,8 +16,6 @@ public class ApiException extends Exception {
   int code = 0;
   String message = null;
 
-  public ApiException() {}
-
   public ApiException(int code, String message) {
     this.code = code;
     this.message = message;
@@ -46,6 +44,7 @@ public class ApiException extends Exception {
    *
    * @return Error message.
    */
+  @Override
   public String getMessage() {
     return message;
   }

@@ -13,7 +13,6 @@
 package fil.eservices.campusincident.data;
 
 import android.util.Log;
-
 import com.android.volley.*;
 import com.android.volley.toolbox.*;
 import com.google.gson.JsonParseException;
@@ -37,7 +36,7 @@ import java.util.concurrent.TimeoutException;
 
 public class ApiInvoker {
   private static ApiInvoker INSTANCE;
-  private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
+  private Map<String, String> defaultHeaderMap = new HashMap<>();
 
   private RequestQueue mRequestQueue;
 
@@ -50,13 +49,13 @@ public class ApiInvoker {
 
   /**
    * ISO 8601 date time format.
-   * @see https://en.wikipedia.org/wiki/ISO_8601
+   * @see /en.wikipedia.org/wiki/ISO_8601
    */
   public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
   /**
    * ISO 8601 date format.
-   * @see https://en.wikipedia.org/wiki/ISO_8601
+   * @see /en.wikipedia.org/wiki/ISO_8601
    */
   public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -64,6 +63,21 @@ public class ApiInvoker {
     // Use UTC as the default time zone.
     DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+  }
+
+  private ApiInvoker(Cache cache, Network network, int threadPoolSize, ResponseDelivery delivery, int connectionTimeout) {
+    if(cache == null) cache = new NoCache();
+    if(network == null) {
+      HttpStack stack = new HurlStack();
+      network = new BasicNetwork(stack);
+    }
+
+    if(delivery == null) {
+      initConnectionRequest(cache, network);
+    } else {
+      initConnectionRequest(cache, network, threadPoolSize, delivery);
+    }
+    this.connectionTimeout = connectionTimeout;
   }
 
   public static void setUserAgent(String userAgent) {
@@ -118,12 +132,14 @@ public class ApiInvoker {
     Format to {@code Pair} objects.
   */
   public static List<Pair> parameterToPairs(String collectionFormat, String name, Object value){
-    List<Pair> params = new ArrayList<Pair>();
+    List<Pair> params = new ArrayList<>();
 
     // preconditions
-    if (name == null || name.isEmpty() || value == null) return params;
+    if (name == null || name.isEmpty() || value == null){
+      return params;
+    }
 
-    Collection valueCollection = null;
+    Collection valueCollection ;
     if (value instanceof Collection) {
       valueCollection = (Collection) value;
     } else {
@@ -136,10 +152,10 @@ public class ApiInvoker {
     }
 
     // get the collection format
-    collectionFormat = (collectionFormat == null || collectionFormat.isEmpty() ? "csv" : collectionFormat); // default: csv
+    collectionFormat = collectionFormat == null || collectionFormat.isEmpty() ? "csv" : collectionFormat; // default: csv
 
     // create the params based on the collection format
-    if (collectionFormat.equals("multi")) {
+    if ("multi".equals(collectionFormat)) {
       for (Object item : valueCollection) {
         params.add(new Pair(name, parameterToString(item)));
       }
@@ -149,13 +165,13 @@ public class ApiInvoker {
 
     String delimiter = ",";
 
-    if (collectionFormat.equals("csv")) {
+    if ("csv".equals(collectionFormat)) {
       delimiter = ",";
-    } else if (collectionFormat.equals("ssv")) {
+    } else if ("ssv".equals(collectionFormat)) {
       delimiter = " ";
-    } else if (collectionFormat.equals("tsv")) {
+    } else if ("tsv".equals(collectionFormat)) {
       delimiter = "\t";
-    } else if (collectionFormat.equals("pipes")) {
+    } else if ("pipes".equals(collectionFormat)) {
       delimiter = "|";
     }
 
@@ -183,24 +199,9 @@ public class ApiInvoker {
     setUserAgent("Swagger-Codegen/1.0.0/android");
 
     // Setup authentications (key: authentication name, value: authentication).
-    INSTANCE.authentications = new HashMap<String, Authentication>();
+    INSTANCE.authentications = new HashMap<>();
     // Prevent the authentications from being modified.
     INSTANCE.authentications = Collections.unmodifiableMap(INSTANCE.authentications);
-  }
-
-  private ApiInvoker(Cache cache, Network network, int threadPoolSize, ResponseDelivery delivery, int connectionTimeout) {
-    if(cache == null) cache = new NoCache();
-    if(network == null) {
-       HttpStack stack = new HurlStack();
-       network = new BasicNetwork(stack);
-    }
-
-    if(delivery == null) {
-       initConnectionRequest(cache, network);
-    } else {
-       initConnectionRequest(cache, network, threadPoolSize, delivery);
-    }
-    this.connectionTimeout = connectionTimeout;
   }
 
   public static ApiInvoker getInstance() {
@@ -491,7 +492,6 @@ public class ApiInvoker {
     if (request != null) {
         request.setRetryPolicy(new DefaultRetryPolicy((int)TimeUnit.SECONDS.toMillis(this.connectionTimeout), DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
-    Log.e("PPP", request.toString());
     return request;
   }
 

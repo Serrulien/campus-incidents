@@ -12,8 +12,6 @@
 
 package fil.eservices.campusincident.data;
 
-import android.util.Log;
-
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import fil.eservices.campusincident.data.model.*;
@@ -51,7 +49,7 @@ class CustomDateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> 
 }
 
 public class JsonUtil {
-  public static GsonBuilder gsonBuilder;
+  public static final GsonBuilder gsonBuilder;
 
   static {
     gsonBuilder = new GsonBuilder();
